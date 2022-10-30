@@ -1,7 +1,4 @@
 /*Обнуление*/
-.wrapper{
-    color: #FF7B47;
-}
 *{
 	padding: 0;
 	margin: 0;
@@ -45,6 +42,7 @@ img{vertical-align: top;}
     display: flex;
     flex-direction: column;
     background: #FAFAFA;
+    color: red;
 }
 /*-----------------------------------------------------------*/
 ._container{
