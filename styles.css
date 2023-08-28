@@ -4,7 +4,7 @@ h1, h2, a, p, label, input, textarea {
 }
 
 body::-webkit-scrollbar {
-  width: 2.5px;
+  width: 2.6px;
   background-color:transparent;
   border-radius: 10px;
   height: 20px;
