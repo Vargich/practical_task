@@ -3,6 +3,9 @@ h1, h2, a, p, label, input, textarea {
     font-family: 'Nunito', sans-serif;
 }
 
+@background-color: white;
+@color: #131313;
+
 body::-webkit-scrollbar {
   width: 2.6px;
   background-color:transparent;
@@ -29,7 +32,7 @@ html.is-animating .transition-fade {
 }
 
 body {
-  background-color: #131313;
+  
  }
 
 * {
@@ -41,7 +44,7 @@ body {
 }
 
 .navbar {
-  background: #131313;
+  background: @background-color;
   height: 10vh;
   display: flex;
   justify-content: center;
@@ -87,7 +90,7 @@ body {
 .navbar__links {
   text-transform: lowercase;
   letter-spacing: 2px;
-  color: #fff;
+  color: @color;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,7 +146,7 @@ body {
   }
 
   .navbar__menu.active {
-    background: #131313;
+    background: @background-color;
     top: 100%;    
     opacity: 1;
     transition: .3;
@@ -165,7 +168,7 @@ body {
     height: 3px;
     margin: 5px auto;
     transition: all 0.3s ease-in-out;
-    background: #fff;
+    background: @background-color;
   }
 
   .navbar__item {
@@ -217,7 +220,7 @@ body {
     transform: translateY(-8px) rotate(-45deg);
   }
   .catalog {
-    background: #131313;
+    background: @background-color;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -229,11 +232,8 @@ body {
 
 /* Hero Section */
 .hero {
-  /* background: #000000;
-  background: linear-gradient(to right, #161616, #000000); */
-  background: rgb(19,19,19);
+  color: #000;
   height: 90vh;
-  background: linear-gradient(180deg, rgba(19,19,19,1) 0%, rgba(17,17,17,0.9710259103641457) 50%, rgba(19,19,19,1) 100%);  padding: 200px 0;
 }
 
 .hero__container {
@@ -252,7 +252,7 @@ body {
 .hero__heading {
   font-size: 50px;
   margin-bottom: 24px;
-  color: #fff;
+  
 }
 
 .hero__heading span {
@@ -314,7 +314,7 @@ body {
 /* About Section */
 .main {
   /* border: 1px solid red; */
-  background-color: #131313;
+  background-color: @background-color;
   
   padding: 5rem 0 5rem 0;
 }
@@ -333,7 +333,7 @@ body {
 }
 
 .main__content {
-  color: #fff;
+  color: @color;
   width: 100%;
 }
 
@@ -414,7 +414,7 @@ body {
 }
 
 .hero__container .fas{
-  color: white;
+  color: @color;
   display: inline-block;
   vertical-align: middle;
   opacity: 0;
@@ -441,15 +441,15 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #fff;
+  color: @color;
   /* border: 1px solid white; */
   /* background: #1a1a1a; */
   transition: 0.3s ease-in;
-  border-bottom: 10px solid white;
+  border-bottom: 10px solid @color;
 }
 
 .about {
-  background-color: #131313;
+  background-color: @background-color;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -604,19 +604,25 @@ textarea {
 }
 
 #card-2 {
-  background: #1a1a1a;
+  // background: #1a1a1a;
+  background-color: @background-color;
   border-radius: 10px;
   margin-left: 50px;
+    background-color: #f9f9f9;
+ -webkit-box-shadow: 0px 5px 15px -9px rgba(34, 60, 80, 0.2);
+-moz-box-shadow: 0px 5px 15px -9px rgba(34, 60, 80, 0.2);
+box-shadow: 0px 5px 15px -9px rgba(34, 60, 80, 0.2);
 }
 
 .contact {
-  background-color: #131313;
+  background-color: @background-color;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
   padding: 5rem 0 5rem 0;
+  color: @color;
 }
 
 .contact__wrapper {
@@ -630,7 +636,6 @@ textarea {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #fff;
   text-align: center;
 }
 
@@ -647,7 +652,7 @@ textarea {
 
 .contact__card a { 
   font-size: 20px;
-  color: white;
+  color: @color;
 }
 
 .contact__card a:hover { 
@@ -662,7 +667,7 @@ textarea {
 
 .mail a { 
   font-size: 30px;
-  color: white;
+  color: @color;
 }
 
 .mail a:hover { 
@@ -816,7 +821,7 @@ textarea {
 
 /* Services Section */
 .catalog {
-  background: #131313;
+  background: @background-color;
   /* display: flex;
   flex-direction: column;
   justify-content: center;
@@ -834,7 +839,9 @@ textarea {
 .catalog h1 {
   text-transform: lowercase;
   letter-spacing: 3px;
-  background-color: #FF5733;
+  background-color: #ff5833;
+  // color: @color;
+  
   /* background-image: linear-gradient(to right, #ff0844 0%, #f7673c 100%); */
   background-size: 100%;
   -webkit-background-clip: text;
@@ -864,11 +871,11 @@ textarea {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #fff;
-  /* background-color: #383838; */
-  border-radius: 10px;
-  /* border: 1px solid white; */
-  background: #1a1a1a;
+  color: @color;
+  background-color: #f9f9f9;
+ -webkit-box-shadow: 0px 5px 15px -9px rgba(34, 60, 80, 0.2);
+-moz-box-shadow: 0px 5px 15px -9px rgba(34, 60, 80, 0.2);
+box-shadow: 0px 5px 15px -9px rgba(34, 60, 80, 0.2);
   transition: 0.3s ease-in;
 }
 
@@ -955,7 +962,7 @@ textarea {
 
 /* Footer CSS */
 .footer__container {
-  background-color: #131313;
+  background-color: @background-color;
   padding: 10rem 0;
   padding-bottom: 5rem;
   display: flex;
@@ -965,7 +972,7 @@ textarea {
 }
 
 #footer__logo {
-  color: #fff;
+  color: @color;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -1240,7 +1247,7 @@ textarea {
 .hero {
   position: relative;
   display: flex;
-  background: url("image/background.jpeg");
+  // background: url("image/background.jpeg");
   background-size: cover;
   width: x;
   height: y;
@@ -1254,7 +1261,7 @@ textarea {
   top: 0;
   width: 100%;
   height: 100%;
-  background: #131313;
+  // background: #131313;
   opacity: 0.99;
 }
 
