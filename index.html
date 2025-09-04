@@ -82,48 +82,62 @@
 
         .shape {
             position: absolute;
-            border-radius: 50%;
-            opacity: 0.6;
-            /* filter: blur(60px); */
+            /* border-radius: 50%; */
+            opacity: 0.1;
+            filter: blur(5px);
             animation: float 8s ease-in-out infinite;
         }
 
-        /* .shape-1 {
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(45deg, #FF5733, #fac6ba);
+        .shape-1 {
+            width: 200px;
+            height: 200px;
+            /* background: linear-gradient(45deg, #FF5733, #fac6ba); */
+            background-image: url(/image/screw.png);
+            background-size:contain;
+            background-position: center;
+            background-repeat: no-repeat;
             top: 10%;
             left: 5%;
             animation-delay: 0s;
         }
 
         .shape-2 {
-            width: 250px;
-            height: 250px;
-            background: linear-gradient(45deg, #5a0017, #49041670);
+            width: 200px;
+            height: 200px;
+            /* background: linear-gradient(45deg, #5a0017, #49041670); */
+            background-image: url(/image/screw-driver.png);
+            background-size:contain;
+            background-position: center;
+            background-repeat: no-repeat;
             top: 60%;
             right: 10%;
             animation-delay: -2s;
-        } */
+        }
 
         .shape-3 {
             width: 200px;
             height: 200px;
             /* background: linear-gradient(45deg, #d1ccc4, #fcb69f); */
-            background-image: url(/image/гайка.png);
+             background-image: url(/image/screw\ \(1\).png);
+            background-size:contain;
+            background-position: center;
+            background-repeat: no-repeat;
             bottom: 15%;
             left: 15%;
             animation-delay: -4s;
         }
 
-        /* .shape-4 {
-            width: 350px;
-            height: 350px;
-            background: linear-gradient(45deg, #84fab0, #8fd3f4);
-            top: 20%;
+        .shape-4 {
+            width: 300px;
+            height: 300px;
+            background-image: url(/image/cross.png);
+            background-size:contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            top: 5%;
             right: 5%;
             animation-delay: -6s;
-        } */
+        }
 
         @keyframes float {
             0%, 100% {
@@ -379,7 +393,7 @@
         </div>
         <div class="particles" id="particles"></div>
     </div>
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
       <div class="navbar__container">
         <a class="js-scroll-trigger" href="#home" id="navbar__logo">Метиз электрод</a>
         <div class="navbar__toggle" id="mobile-menu">

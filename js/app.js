@@ -4,6 +4,7 @@ window.onload = function() {
 const menu = document.querySelector('#mobile-menu');
 const menuLinks = document.querySelector('.navbar__menu');
 const navLogo = document.querySelector('#navbar__logo');
+const element = document.getElementById('navbar');
 
 // $(document).ready(function(){
 //   var body = $("body");
@@ -24,9 +25,15 @@ const mobileMenu = () => {
   document.querySelector('#telInfo').classList.toggle('active');
   menu.classList.toggle('is-active');
   menuLinks.classList.toggle('active');
+  if(element.style.backgroundColor=='white')
+    element.style.backgroundColor='transparent';
+  else
+    element.style.backgroundColor='white';    
+
 };
 
 
+    
 menu.addEventListener('click', mobileMenu);
 
 // Show active menu when scrolling
@@ -130,11 +137,16 @@ window.addEventListener('click', highlightMenu);
 //  Close mobile Menu when clicking on a menu item
 const hideMobileMenu = () => {
   const menuBars = document.querySelector('.is-active');
+  
   if (window.innerWidth <= 768 && menuBars) {
-    menu.classList.toggle('is-active');
+    // const element = document.getElementById('navbar__logo');
+    // element.style.color='blue';
+   menu.classList.toggle('is-active');
     menuLinks.classList.remove('active');
     document.querySelector('body').classList.remove('active');
     document.querySelector('#telInfo').classList.remove('active');
+    
+     
   }
 };
 
