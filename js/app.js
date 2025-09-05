@@ -43,26 +43,34 @@ const highlightMenu = () => {
   const aboutMenu = document.querySelector('#about-page');
   const servicesMenu = document.querySelector('#services-page');
   let scrollPos = window.scrollY;
-  // console.log(scrollPos);
 
+  // navLogo.textContent=scrollPos;
+  if(window.innerWidth > 960 && scrollPos < 700)
+  {
+    homeMenu.classList.remove('highlight');
+    return
+  }
   // adds 'highlight' class to my menu items
-  if (window.innerWidth > 960 && scrollPos < 1400) {
+  if (scrollPos < 1900) {
     homeMenu.classList.add('highlight');
+
     aboutMenu.classList.remove('highlight');
     return;
-  } else if (window.innerWidth > 960 && scrollPos < 3000) {
+  } else if (window.innerWidth > 960 && scrollPos < 3500) {
+    // alert(scrollPos);
     aboutMenu.classList.add('highlight');
     homeMenu.classList.remove('highlight');
     servicesMenu.classList.remove('highlight');
     return;
-  } else if (window.innerWidth > 960 && scrollPos < 4000) {
+  } else if (window.innerWidth > 960 && scrollPos < 4500) {
     servicesMenu.classList.add('highlight');
     aboutMenu.classList.remove('highlight');
     return;
-  }
-
+  } 
+   
   if ((elem && window.innerWIdth < 960 && scrollPos < 600) || elem) {
     elem.classList.remove('highlight');
+    
   }
 };
 
