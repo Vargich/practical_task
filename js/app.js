@@ -43,26 +43,29 @@ const highlightMenu = () => {
   const aboutMenu = document.querySelector('#about-page');
   const servicesMenu = document.querySelector('#services-page');
   let scrollPos = window.scrollY;
-
+  //navLogo.innerHTML=scrollPos;
   // navLogo.textContent=scrollPos;
-  if(window.innerWidth > 960 && scrollPos < 700)
+  if(window.innerWidth > 960 && scrollPos < 800)
   {
+    //element.classList.remove('background-white');
     homeMenu.classList.remove('highlight');
     return
   }
   // adds 'highlight' class to my menu items
-  if (scrollPos < 1900) {
+  if (scrollPos < 1750) {
     homeMenu.classList.add('highlight');
-
+    //element.classList.add('background-white');
     aboutMenu.classList.remove('highlight');
     return;
   } else if (window.innerWidth > 960 && scrollPos < 3500) {
     // alert(scrollPos);
+    //element.classList.add('background-white');
     aboutMenu.classList.add('highlight');
     homeMenu.classList.remove('highlight');
     servicesMenu.classList.remove('highlight');
     return;
   } else if (window.innerWidth > 960 && scrollPos < 4500) {
+    //element.classList.add('background-white');
     servicesMenu.classList.add('highlight');
     aboutMenu.classList.remove('highlight');
     return;
@@ -70,7 +73,8 @@ const highlightMenu = () => {
    
   if ((elem && window.innerWIdth < 960 && scrollPos < 600) || elem) {
     elem.classList.remove('highlight');
-    
+    element.classList.remove('background-white');
+    //alert("1");
   }
 };
 

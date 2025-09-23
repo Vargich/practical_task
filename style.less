@@ -15,6 +15,16 @@ body {
       overflow-x: hidden;
     }
 
+.background-white{
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  padding: 30px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+}
     .animated-background {
       position: fixed;
       top: 0;
@@ -343,6 +353,8 @@ body {
       .shape {
         transform: scale(0.7);
       }
+      
+      
     }
 
     /* Дополнительные декоративные элементы */
@@ -602,6 +614,12 @@ html.is-animating .transition-fade {
 }
 
 @media screen and (max-width: 960px){ 
+
+  .about{
+    height: 100% !important;
+  }
+
+
   .navbar__container {
     display: flex;
     justify-content: space-between;
@@ -789,6 +807,7 @@ html.is-animating .transition-fade {
 .highlight {
   border-bottom: 3px solid #FF5733;
 }
+
 
 @media screen and (max-width: 768px) {
   .hero {
