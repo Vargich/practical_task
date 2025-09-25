@@ -4,7 +4,9 @@ window.onload = function() {
 const menu = document.querySelector('#mobile-menu');
 const menuLinks = document.querySelector('.navbar__menu');
 const navLogo = document.querySelector('#navbar__logo');
-const element = document.getElementById('navbar');
+const navbar = document.getElementById('navbar');
+const navbar__container = document.getElementById('navbar__container');
+
 
 // $(document).ready(function(){
 //   var body = $("body");
@@ -25,11 +27,13 @@ const mobileMenu = () => {
   document.querySelector('#telInfo').classList.toggle('active');
   menu.classList.toggle('is-active');
   menuLinks.classList.toggle('active');
-  if(element.style.backgroundColor=='white')
-    element.style.backgroundColor='transparent';
-  else
-    element.style.backgroundColor='white';    
-
+  // if(element.style.backgroundColor=='white')
+  //   element.style.backgroundColor='transparent';
+  // else
+  //   element.style.backgroundColor='white';
+   navbar.classList.remove('background-glass');    
+  navbar.classList.toggle('background-white');
+ 
 };
 
 
@@ -47,14 +51,14 @@ const highlightMenu = () => {
   // navLogo.textContent=scrollPos;
   if(window.innerWidth > 960 && scrollPos < 800)
   {
-    //element.classList.remove('background-white');
+    navbar.classList.remove('background-glass');
     homeMenu.classList.remove('highlight');
     return
   }
   // adds 'highlight' class to my menu items
-  if (scrollPos < 1750) {
+  if (window.innerWidth > 960 && scrollPos < 1750) {
     homeMenu.classList.add('highlight');
-    //element.classList.add('background-white');
+    navbar.classList.add('background-glass');
     aboutMenu.classList.remove('highlight');
     return;
   } else if (window.innerWidth > 960 && scrollPos < 3500) {
@@ -73,9 +77,18 @@ const highlightMenu = () => {
    
   if ((elem && window.innerWIdth < 960 && scrollPos < 600) || elem) {
     elem.classList.remove('highlight');
-    element.classList.remove('background-white');
+    navbar.classList.remove('background-glass');
     //alert("1");
   }
+  if(window.innerWidth <= 960 && scrollPos > 100 && !navbar.classList.contains('background-white'))
+  {
+     navbar.classList.add('background-glass');
+    //  alert("1");
+    //navLogo.innerHTML=scrollPos;
+    //return
+  }
+  else
+   navbar.classList.remove('background-glass'); 
 };
 
 // (function($) {
