@@ -239,17 +239,17 @@
         <div class="main__img--card form1" id="card-2">
           <form id="feedback-form" class="form" action="/feedback/process/process.php" enctype="multipart/form-data"
             novalidate>
-            <label for="name" class="control-label">Имя</label>
+            <!-- <label for="name" class="control-label">Имя</label> -->
             <input id="name" type="text" name="name" class="form-control" value="" placeholder="Имя" minlength="2"
               maxlength="30" required="required">
 
-            <label for="phone" class="control-label">Телефон</label>
+            <!-- <label for="phone" class="control-label">Телефон</label> -->
             <div class="input-group">
               <input id="phone" type="tel" name="phone" placeholder="Телефон" required="required" class="form-control"
                 pattern="^\(?[0-9]{3}\)?(\s+)?[0-9]{3}-?[0-9]{2}-?[0-9]{2}$">
             </div>
 
-            <label for="message" class="control-label">Сообщение</label>
+            <!-- <label for="message" class="control-label">Сообщение</label> -->
             <textarea id="message" name="message" class="form-control" rows="3" placeholder="Сообщение" maxlength="500"
               required="required"></textarea>
             <div id="invalid" class="invalid-feedback"></div>

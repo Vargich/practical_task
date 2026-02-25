@@ -4,23 +4,12 @@ window.onload = function() {
 const menu = document.querySelector('#mobile-menu');
 const menuLinks = document.querySelector('.navbar__menu');
 const navLogo = document.querySelector('#navbar__logo');
-const navbar = document.getElementById('navbar');
+// const navbar = document.getElementById('navbar');
+const navbar = document.querySelector('.navbar');
 const navbar__container = document.getElementById('navbar__container');
 
 
-// $(document).ready(function(){
-//   var body = $("body");
-//   body.fadeIn(500);
-//   $(document).on("click", "a:not([href^='#']):not([href^='tel']):not([href^='mailto'])", function(e) {
-//    e.preventDefault();
-//    $("body").fadeOut(500);
-//    var self = this;
-//    setTimeout(function () {
-//     window.location.href = $(self).attr("href");
-//    }, 500);
-//   });
-//  });
- 
+
 // Display Mobile Menu
 const mobileMenu = () => {
   document.querySelector('body').classList.toggle('active');
@@ -41,123 +30,106 @@ const mobileMenu = () => {
 menu.addEventListener('click', mobileMenu);
 
 // Show active menu when scrolling
-const highlightMenu = () => {
-  const elem = document.querySelector('.highlight');
-  const homeMenu = document.querySelector('#home-page');
-  const aboutMenu = document.querySelector('#about-page');
-  const servicesMenu = document.querySelector('#services-page');
-  let scrollPos = window.scrollY;
-  //navLogo.innerHTML=scrollPos;
-  // navLogo.textContent=scrollPos;
-  if(window.innerWidth > 960 && scrollPos < 800)
-  {
-    navbar.classList.remove('background-glass');
-    homeMenu.classList.remove('highlight');
-    return
-  }
-  // adds 'highlight' class to my menu items
-  if (window.innerWidth > 960 && scrollPos < 1750) {
-    homeMenu.classList.add('highlight');
-    navbar.classList.add('background-glass');
-    aboutMenu.classList.remove('highlight');
-    return;
-  } else if (window.innerWidth > 960 && scrollPos < 3500) {
-    // alert(scrollPos);
-    //element.classList.add('background-white');
-    aboutMenu.classList.add('highlight');
-    homeMenu.classList.remove('highlight');
-    servicesMenu.classList.remove('highlight');
-    return;
-  } else if (window.innerWidth > 960 && scrollPos < 4500) {
-    //element.classList.add('background-white');
-    servicesMenu.classList.add('highlight');
-    aboutMenu.classList.remove('highlight');
-    return;
-  } 
+// const highlightMenu = () => {
+//   const elem = document.querySelector('.highlight');
+//   const homeMenu = document.querySelector('#home-page');
+//   const aboutMenu = document.querySelector('#about-page');
+//   const servicesMenu = document.querySelector('#services-page');
+//   let scrollPos = window.scrollY;
+//   //navLogo.innerHTML=scrollPos;
+//    navLogo.textContent=scrollPos;
+//   if(window.innerWidth > 960 && scrollPos < 800)
+//   {
+//     navbar.classList.remove('background-glass');
+//     homeMenu.classList.remove('highlight');
+//     return
+//   }
+//   // adds 'highlight' class to my menu items
+//   if (window.innerWidth > 960 && scrollPos < 1750) {
+//     homeMenu.classList.add('highlight');
+//     navbar.classList.add('background-glass');
+//     aboutMenu.classList.remove('highlight');
+//     return;
+//   } else if (window.innerWidth > 960 && scrollPos < 3500) {
+//     // alert(scrollPos);
+//     //element.classList.add('background-white');
+//     aboutMenu.classList.add('highlight');
+//     homeMenu.classList.remove('highlight');
+//     servicesMenu.classList.remove('highlight');
+//     return;
+//   } else if (window.innerWidth > 960 && scrollPos < 4500) {
+//     //element.classList.add('background-white');
+//     servicesMenu.classList.add('highlight');
+//     aboutMenu.classList.remove('highlight');
+//     return;
+//   } 
    
-  if ((elem && window.innerWIdth < 960 && scrollPos < 600) || elem) {
-    elem.classList.remove('highlight');
-    navbar.classList.remove('background-glass');
-    //alert("1");
+//   if ((elem && window.innerWIdth < 960 && scrollPos < 600) || elem) {
+//     elem.classList.remove('highlight');
+//     navbar.classList.remove('background-glass');
+//     //alert("1");
+//   }
+//   if(window.innerWidth <= 960 && scrollPos > 100 && !navbar.classList.contains('background-white'))
+//   {
+//      navbar.classList.add('background-glass');
+//     //  alert("1");
+//     //navLogo.innerHTML=scrollPos;
+//     //return
+//   }
+//   else
+//    navbar.classList.remove('background-glass'); 
+// };
+const highlightMenu = () => {
+
+  const aboutSection = document.querySelector('#about');
+  const catalogSection = document.querySelector('#catalog');
+  const contactSection = document.querySelector('#contact');
+
+  const aboutMenu = document.querySelector('#home-page');
+  const catalogMenu = document.querySelector('#about-page');
+  const contactMenu = document.querySelector('#services-page');
+
+  if (!aboutSection || !catalogSection || !contactSection) return;
+
+  const scrollPos = window.scrollY;
+  const navHeight = navbar.offsetHeight;
+
+  const aboutTop = aboutSection.getBoundingClientRect().top + window.scrollY - navHeight;
+  const catalogTop = catalogSection.getBoundingClientRect().top + window.scrollY - navHeight;
+  const contactTop = contactSection.getBoundingClientRect().top + window.scrollY - navHeight;
+  const contactBottom = contactTop + contactSection.offsetHeight;
+
+  // очищаем
+  aboutMenu.classList.remove('highlight');
+  catalogMenu.classList.remove('highlight');
+  contactMenu.classList.remove('highlight');
+
+  if (window.innerWidth > 960) {
+
+    if (scrollPos >= aboutTop && scrollPos < catalogTop) {
+      aboutMenu.classList.add('highlight');
+      navbar.classList.add('background-glass');
+    }
+    else if (scrollPos >= catalogTop && scrollPos < contactTop) {
+      catalogMenu.classList.add('highlight');
+      navbar.classList.add('background-glass');
+    }
+    else if (scrollPos >= contactTop && scrollPos < contactBottom) {
+      contactMenu.classList.add('highlight');
+      navbar.classList.add('background-glass');
+    }
+    else {
+      navbar.classList.remove('background-glass');
+    }
   }
-  if(window.innerWidth <= 960 && scrollPos > 100 && !navbar.classList.contains('background-white'))
-  {
-     navbar.classList.add('background-glass');
-    //  alert("1");
-    //navLogo.innerHTML=scrollPos;
-    //return
-  }
-  else
-   navbar.classList.remove('background-glass'); 
 };
 
-// (function($) {
-//   "use strict"; // Start of use strict
-
-//   // Smooth scrolling using jQuery easing
-//   $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
-//     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-//       var target = $(this.hash);
-//       target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-//       if (target.length) {
-//         $('html, body').animate({
-//           scrollTop: (target.offset().top - 70)
-//         }, 1000, "easeInOutExpo");
-//         return false;
-//       }
-//     }
-//   });
-
-//   // Scroll to top button appear
-//   $(document).scroll(function() {
-//     var scrollDistance = $(this).scrollTop();
-//     if (scrollDistance > 100) {
-//       $('.scroll-to-top').fadeIn();
-//     } else {
-//       $('.scroll-to-top').fadeOut();
-//     }
-//   });
-
-//   // Closes responsive menu when a scroll trigger link is clicked
-//   $('.js-scroll-trigger').click(function() {
-//     $('.navbar-collapse').collapse('hide');
-//   });
-
-//   // Activate scrollspy to add active class to navbar items on scroll
-//   $('body').scrollspy({
-//     target: '#mainNav',
-//     offset: 80
-//   });
-
-//   // Collapse Navbar
-//   var navbarCollapse = function() {
-//     if ($("#mainNav").offset().top > 100) {
-//       $("#mainNav").addClass("navbar-shrink");
-//     } else {
-//       $("#mainNav").removeClass("navbar-shrink");
-//     }
-//   };
-//   // Collapse now if page is not at top
-//   navbarCollapse();
-//   // Collapse the navbar when page is scrolled
-//   $(window).scroll(navbarCollapse);
-
-//   // Floating label headings for the contact form
-//   $(function() {
-//     $("body").on("input propertychange", ".floating-label-form-group", function(e) {
-//       $(this).toggleClass("floating-label-form-group-with-value", !!$(e.target).val());
-//     }).on("focus", ".floating-label-form-group", function() {
-//       $(this).addClass("floating-label-form-group-with-focus");
-//     }).on("blur", ".floating-label-form-group", function() {
-//       $(this).removeClass("floating-label-form-group-with-focus");
-//     });
-//   });
-
-// })(jQuery); // End of use strict
-
-
 window.addEventListener('scroll', highlightMenu);
-window.addEventListener('click', highlightMenu);
+window.addEventListener('resize', highlightMenu);
+document.addEventListener('DOMContentLoaded', highlightMenu);
+
+
+
 
 //  Close mobile Menu when clicking on a menu item
 const hideMobileMenu = () => {
