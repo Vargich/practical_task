@@ -81,6 +81,8 @@ menu.addEventListener('click', mobileMenu);
 // };
 const highlightMenu = () => {
 
+  const heroSection = document.querySelector('#hero');
+
   const aboutSection = document.querySelector('#about');
   const catalogSection = document.querySelector('#catalog');
   const contactSection = document.querySelector('#contact');
@@ -94,6 +96,8 @@ const highlightMenu = () => {
   const scrollPos = window.scrollY;
   const navHeight = navbar.offsetHeight;
 
+  const heroTop = heroSection.getBoundingClientRect().top + window.scrollY - navHeight; 
+
   const aboutTop = aboutSection.getBoundingClientRect().top + window.scrollY - navHeight;
   const catalogTop = catalogSection.getBoundingClientRect().top + window.scrollY - navHeight;
   const contactTop = contactSection.getBoundingClientRect().top + window.scrollY - navHeight;
@@ -104,9 +108,11 @@ const highlightMenu = () => {
   catalogMenu.classList.remove('highlight');
   contactMenu.classList.remove('highlight');
 
-  if (window.innerWidth > 960) {
-
-    if (scrollPos >= aboutTop && scrollPos < catalogTop) {
+  if (window.innerWidth > 960 ) {
+    if(scrollPos>= heroTop && scrollPos<=aboutTop)
+      navbar.classList.add('background-glass');
+    
+    else if (scrollPos >= aboutTop && scrollPos < catalogTop) {
       aboutMenu.classList.add('highlight');
       navbar.classList.add('background-glass');
     }
@@ -122,7 +128,19 @@ const highlightMenu = () => {
       navbar.classList.remove('background-glass');
     }
   }
+
+  if (window.innerWidth < 960 ) {
+    if(scrollPos>= heroTop)
+      navbar.classList.add('background-glass');
+   
+    else 
+      navbar.classList.remove('background-glass');
+    
+  }
 };
+
+ 
+
 
 window.addEventListener('scroll', highlightMenu);
 window.addEventListener('resize', highlightMenu);
@@ -150,3 +168,18 @@ const hideMobileMenu = () => {
 menuLinks.addEventListener('click', hideMobileMenu);
 navLogo.addEventListener('click', hideMobileMenu);
 
+const pattern = document.querySelector('.pattern-track');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      pattern.classList.add('animate');
+    } else {
+      pattern.classList.remove('animate');
+    }
+  });
+}, {
+  threshold: 0.1
+});
+
+observer.observe(pattern);

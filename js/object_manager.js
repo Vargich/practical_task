@@ -40,8 +40,8 @@ var shopList = [
             {'coordinates': [50.10007069457058, 45.40316283702851], 'name': 'г.Камышин, 2-й железнодорожный переезд, корпус 1', 'timework': 'пн-пт: 8:00 - 17:00<br>сб: 8:30 - 15:00<br>вс: 8:30 - 14:00<br>ПЕРЕРЫВ: 12:00 - 12:30', 'how': "<font size=4><b><a target='_blank' href='https://yandex.ru/maps/10959/kamishin/?ll=45.406037%2C50.097563&mode=routes&rtext=~50.100138%2C45.403078&rtt=auto&ruri=~&z=16.15'>Как добраться?</a></b></font>"},
             {'coordinates': [50.105875308002666, 45.4138970375061], 'name': 'г.Камышин, ул.Ленина, 14А', 'timework': 'пн-пт: 8:00 - 17:00<br>сб: 8:30 - 15:00<br>вс: 8:30 - 14:00<br>ПЕРЕРЫВ: 12:00 - 12:30', 'how': "<font size=4><b><a target='_blank' href='https://yandex.ru/maps/10959/kamishin/?ll=45.406037%2C50.097563&mode=routes&rtext=~50.100138%2C45.403078&rtt=auto&ruri=~&z=16.15'>Как добраться?</a></b></font>"},
             {'coordinates': [50.08035315572386, 45.407588481903076], 'name': 'г.Камышин, ул.Спартаковская, 75',  'timework': 'пн-пт: 8:00 - 17:00<br>сб: 8:30 - 15:00<br>вс: 8:30 - 14:00<br>ПЕРЕРЫВ: 12:00 - 12:30', 'how': "<font size=4><b><a target='_blank' href='https://yandex.ru/maps/10959/kamishin/?ll=45.406037%2C50.097563&mode=routes&rtext=~50.100138%2C45.403078&rtt=auto&ruri=~&z=16.15'>Как добраться?</a></b></font>"},
-            {'coordinates': [50.135726811041174, 45.20690023899079], 'name': 'г.Петров-Вал, ул.Ленина, 29', 'how': "<font size=4><b><a target='_blank' href='https://yandex.ru/maps/10959/kamishin/?ll=45.406037%2C50.097563&mode=routes&rtext=~50.100138%2C45.403078&rtt=auto&ruri=~&z=16.15'>Как добраться?</a></b></font>"},
-            {'coordinates': [50.31529804192351, 44.80890870094299], 'name': 'г.Котово, ул.Разина, 6', 'how': "<font size=4><b><a target='_blank' href='https://yandex.ru/maps/10959/kamishin/?ll=45.406037%2C50.097563&mode=routes&rtext=~50.100138%2C45.403078&rtt=auto&ruri=~&z=16.15'>Как добраться?</a></b></font>"}
+            {'coordinates': [50.135726811041174, 45.20690023899079], 'name': 'г.Петров-Вал, ул.Ленина, 29', 'how': "<font size=4><b><a target='_blank' href='https://yandex.ru/maps/10959/kamishin/?ll=45.406037%2C50.097563&mode=routes&rtext=~50.100138%2C45.403078&rtt=auto&ruri=~&z=16.15'>Как добраться?</a></b></font>"}
+            
 
         ]
     }
@@ -53,8 +53,8 @@ function init() {
  
     // Создаем карту
     myMap = new ymaps.Map("map", {
-        center: [50.169861746007314, 45.00823974609376], 
-        zoom: 10,
+        center: [50.108462, 45.307467], 
+        zoom: 11,
         
         controls: [
             'zoomControl'
@@ -113,7 +113,7 @@ function init() {
         $('#shops').html('');
         for (var c = 0; c < shopList[0].shops.length; c++) {
             //$('#shops').append('<li value="' + c + '">' + shopList[0].shops[c].name + '</li>' + shopList[0].shops[c].balloonContentHeader+'<br>'+'</br>');
-            $('#shops').append('<div style="background-color: #1a1a1a; padding: 10px 20px; margin-bottom: 15px;">'+'<li style="list-style-type: none;" value="' + c + '">' + '<b style="Color: #FF5733; font-size: 9px;">'+'<h1>'+shopList[0].shops[c].name+'</h1>' +'</b>' +'<div style="margin-bottom: 10px;">'+'<p style="color: white; letter-spacing: 1px; padding: 10px 0">'+ shopList[0].shops[c].timework+'</p>'+'<p style="color: yellow;">'+shopList[0].shops[c].how+'</>'+'</div>'+'</li>'+'</div>');
+            $('#shops').append('<div style="background-color: transpended; padding: 10px 20px; margin-bottom: 15px;">'+'<li style="list-style-type: none;" value="' + c + '">' + '<b style="Color: #FF5733; font-size: 9px;">'+'<h1>'+shopList[0].shops[c].name+'</h1>' +'</b>' +'<div style="margin-bottom: 10px;">'+'<p style="color: black; letter-spacing: 1px; padding: 10px 0">'+ shopList[0].shops[c].timework+'</p>'+'<p style="color: yellow;">'+shopList[0].shops[c].how+'</>'+'</div>'+'</li>'+'</div>');
 
         }
     }

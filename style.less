@@ -1199,6 +1199,9 @@ box-shadow: 0px 5px 15px -9px rgba(34, 60, 80, 0.2);
   font-size: 30px;
 }
 
+
+
+
 /* Mobile Responsive */
 @media screen and (max-width: 1100px) {
   .main__container {
@@ -1285,28 +1288,7 @@ box-shadow: 0px 5px 15px -9px rgba(34, 60, 80, 0.2);
     font-size: 18px;
   }
 
-  #map{
-    width: 60%;
-    height: 100%;
-    padding-left: 0px;
-    margin-left: 0px;
-  }
-  .info-shop{
-    display: none;
-    width: 0;
-    height: 0;
-    /* display: flex; */
-    flex-direction: column;
-    overflow: auto;
-    padding: 0px 10px;
   
-  }
-  .list{
-    display: flex;
-    width: 100%;
-    height: 80%;
-    padding: 40px 0px 0 0px;
-  }
 }
 
 @media screen and (max-width: 480px) {
@@ -1352,7 +1334,7 @@ box-shadow: 0px 5px 15px -9px rgba(34, 60, 80, 0.2);
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 5rem 0 5rem 0;
+  padding: 7rem 0 7rem 0;
 }
 
 .catalog h1 {
@@ -1482,7 +1464,7 @@ box-shadow: 0px 5px 15px -9px rgba(34, 60, 80, 0.2);
 /* Footer CSS */
 .footer__container {
   background-color: @background-color;
-  padding: 5rem 0;
+  // padding: 5rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1637,27 +1619,6 @@ box-shadow: 0px 5px 15px -9px rgba(34, 60, 80, 0.2);
   }
 }
 
-#map{
-  width: 60%;
-  height: 100%;
-  padding-left: 20px;
-  margin-left: 20px;
-}
-.info-shop{
-  width: 40%;
-  height: 100%;
-  /* display: flex; */
-  flex-direction: column;
-  overflow: auto;
-  padding: 0px 10px;
-
-}
-.list{
-  display: flex;
-  width: 100%;
-  height: 80%;
-  padding: 40px 40px 0 40px;
-}
 .info-shop::-webkit-scrollbar {
   width: 2.5px;
   background-color:transparent;
@@ -1805,6 +1766,98 @@ box-shadow: 0px 5px 15px -9px rgba(34, 60, 80, 0.2);
   display: block;
   color: #FF5733;
 
+}
+
+.pattern {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  
+}
+
+.pattern-track {
+  white-space: nowrap;
+  font-size: 3vw;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.432);
+  animation: scroll 20s linear infinite;
+   animation-play-state: paused;
+}
+.pattern-track.animate {
+  animation-play-state: running; /* запускается когда видна */
+}
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+ 
+.list {
+  display: flex;
+  gap: 40px;
+  padding: 7rem 8%;
+  align-items: stretch;
+  // background: #f8f9fb;
+}
+
+/* ===== БЛОК СПИСКА ===== */
+.info-shop {
+  flex: 1;
+  // background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* Список */
+#shops {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#shops li {
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#shops li:hover {
+  color: #0077ff;
+  transform: translateX(5px);
+}
+
+/* ===== КАРТА ===== */
+#map {
+  flex: 1.2;
+  height: 600px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  position: relative;
+}
+
+/* ===== АДАПТИВ ===== */
+@media (max-width: 960px) {
+  .list {
+    flex-direction: column;
+  }
+
+  #map {
+    height: 400px;
+  }
+
+  .info-shop {
+    max-height: none;
+  }
 }
 
 
