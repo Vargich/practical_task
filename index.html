@@ -1,759 +1,163 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Метиз Электрод</title>
+  <title>Метиз Электрод — крепёж и инструменты</title>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
     integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
-  <meta name="description"
-    content="Cеть магазинов по продаже крепёжных материалов, электротоваров, метизов, инструментов. +7 (961) 089-38-12" />
-  <meta name="keywords"
-    content="купить, Камышин, котово, петров-вал, метизы, сварочные аппараты, дуговая сварка, аргоновая сварка, плазменная резка, полуавтомат, метиз электрод" />
-  <meta name="image" content="image/favicon.png" />
   <link rel="shortcut icon" href="image/favicon.ico" type="image/ico" />
-
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Метиз Электрод" />
-  <meta property="og:description" content="Крепёж и инструменты — всё в одном месте" />
-  <meta property="og:image" content="image/favicon.png" />
-  <meta property="og:url" content="https://www.metiz-elektrod.info" />
-
-  <link rel="canonical" href="https://www.metiz-elektrod.info" />
-
-  <link rel="preconnect" href="//fonts.gstatic.com" />
-  <link rel="preconnect" href="//google-analytics.com" />
-
-  <link rel="apple-touch-icon" sizes="57x57" href="./image/apple-icon-57x57.png" />
-  <link rel="apple-touch-icon" sizes="60x60" href=".image/apple-icon-60x60.png" />
-  <link rel="apple-touch-icon" sizes="72x72" href=".image/apple-icon-72x72.png" />
-  <link rel="apple-touch-icon" sizes="76x76" href=".image/apple-icon-76x76.png" />
-  <link rel="apple-touch-icon" sizes="114x114" href=".image/apple-icon-114x114.png" />
-  <link rel="apple-touch-icon" sizes="120x120" href=".image/apple-icon-120x120.png" />
-  <link rel="apple-touch-icon" sizes="144x144" href=".image/apple-icon-144x144.png" />
-  <link rel="apple-touch-icon" sizes="152x152" href=".image/apple-icon-152x152.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href=".image/apple-icon-180x180.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href=".image/android-icon-192x192.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href=".image/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href=".image/favicon-96x96.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href=".image/favicon-16x16.png" />
-  <link rel="manifest" href=".image/manifest.json" />
-  <meta name="msapplication-TileColor" content="#ffffff" />
-  <meta name="msapplication-TileImage" content=".image/ms-icon-144x144.png" />
-  <meta name="theme-color" content="#ffffff" />
-
-  <meta name="apple-mobile-web-app-title" content="Метиз Электрод" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="description" content="Метизы, сварочное оборудование, инструмент и промышленный прокат" />
 </head>
 
-<body id="home">
-  <div class="animated-background">
-    <div class="floating-shapes">
-      <div class="shape shape-1"></div>
-      <div class="shape shape-2"></div>
-      <div class="shape shape-3"></div>
-      <div class="shape shape-4"></div>
+<body>
+
+  <!-- Модальное окно -->
+  <div id="authModal"
+    style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;justify-content:center;align-items:center;backdrop-filter:blur(5px);">
+    <div
+      style="background:white;border-radius:20px;padding:2.5rem 2rem;width:420px;max-width:90vw;position:relative;box-shadow:0 25px 50px rgba(0,0,0,0.2);">
+      <button onclick="document.getElementById('authModal').style.display='none'"
+        style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.8rem;cursor:pointer;color:#999;">&times;</button>
+      <div style="display:flex;margin-bottom:1.5rem;">
+        <button id="tabLogin" onclick="switchTab('login')"
+          style="flex:1;padding:0.7rem;background:#FF5733;color:white;border:none;cursor:pointer;font-weight:600;border-radius:10px 0 0 10px;">Войти</button>
+        <button id="tabRegister" onclick="switchTab('register')"
+          style="flex:1;padding:0.7rem;background:#f3f4f6;color:black;border:none;cursor:pointer;font-weight:600;border-radius:0 10px 10px 0;">Регистрация</button>
+      </div>
+      <div id="authMessage" style="text-align:center;margin-bottom:1rem;font-size:0.9rem;min-height:1.2rem;"></div>
+      <form id="loginForm" onsubmit="handleLogin(event)" style="display:block;">
+        <div style="margin-bottom:1.2rem;"><input type="email" id="loginEmail" placeholder="Email" required
+            style="width:100%;padding:0.9rem;border:1px solid #ddd;border-radius:10px;"></div>
+        <div style="margin-bottom:1.2rem;"><input type="password" id="loginPassword" placeholder="Пароль" required
+            style="width:100%;padding:0.9rem;border:1px solid #ddd;border-radius:10px;"></div>
+        <button type="submit"
+          style="width:100%;padding:0.9rem;background:#FF5733;color:white;border:none;border-radius:10px;font-weight:bold;cursor:pointer;">Войти</button>
+      </form>
+      <form id="registerForm" onsubmit="handleRegister(event)" style="display:none;">
+        <div style="margin-bottom:1.2rem;"><input type="text" id="regName" placeholder="Имя" required
+            style="width:100%;padding:0.9rem;border:1px solid #ddd;border-radius:10px;"></div>
+        <div style="margin-bottom:1.2rem;"><input type="email" id="regEmail" placeholder="Email" required
+            style="width:100%;padding:0.9rem;border:1px solid #ddd;border-radius:10px;"></div>
+        <div style="margin-bottom:1.2rem;"><input type="password" id="regPassword" placeholder="Пароль" required
+            style="width:100%;padding:0.9rem;border:1px solid #ddd;border-radius:10px;"></div>
+        <button type="submit"
+          style="width:100%;padding:0.9rem;background:#FF5733;color:white;border:none;border-radius:10px;font-weight:bold;cursor:pointer;">Зарегистрироваться</button>
+      </form>
     </div>
-    <div class="particles" id="particles"></div>
   </div>
-  <nav class="navbar" id="navbar">
-    <div class="navbar__container" id="navbar__container">
-      <a class="js-scroll-trigger" href="#home" id="navbar__logo">Метиз электрод</a>
-      <div class="navbar__toggle" id="mobile-menu">
-        <span class="bar"></span> <span class="bar"></span>
-        <span class="bar"></span>
+
+  <!-- ШАПКА -->
+  <header class="shop-header">
+    <div class="shop-header__container">
+      <a href="index.html" class="shop-logo">Метиз<span>Электрод</span></a>
+      <div class="shop-search">
+        <input type="text" placeholder="Поиск товаров..." id="globalSearch" />
+        <button><i class="fas fa-search"></i></button>
       </div>
-      <ul class="navbar__menu">
-        <li class="navbar__item">
-          <a href="#about" class="navbar__links js-scroll-trigger" id="home-page">о нас</a>
-        </li>
-        <li class="navbar__item">
-          <a href="#catalog" class="navbar__links js-scroll-trigger" id="about-page">каталог</a>
-        </li>
-        <li class="navbar__item">
-          <a href="#contact" class="navbar__links js-scroll-trigger" id="services-page">контакты</a>
-        </li>
-        <li class="navbar__item">
-          <a href="tel:+79610893812" class="navbar__links phone-mob" id="telInfo">+7(961)089-38-12</a>
-        </li>
-      </ul>
+      <nav class="shop-nav" id="shopNav">
+        <a href="index.html" class="active" data-page="home">Главная</a>
+        <a href="#catalog" data-page="catalog">Каталог</a>
+        <a href="#about" data-page="about">О нас</a>
+      </nav>
+      <div class="shop-header__actions">
+        <a href="#" onclick="openAuthModal(event)" class="shop-header__login"><i class="fas fa-user"></i>
+          <span>Войти</span></a>
+        <a href="#" class="shop-header__cart" onclick="openCart()"><i class="fas fa-shopping-cart"></i> <span
+            id="cart-count">0</span></a>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
     </div>
-  </nav>
-  <main id="swup" class="transition-fade">
-    <div class="hero">
-      <div class="hero__container">
-        <h1 class="hero__heading " id="hero">
-          крепёж и инструменты — всё в одном месте
-        </h1>
-
-        <p class="hero__description">
-          Метизы, сварочное оборудование, инструмент и промышленный прокат
-          для предприятий и частных клиентов
-        </p>
-
-        <div class="hero__buttons">
-          <a href="#catalog" class="hero__btn">
-            Смотреть каталог
-          </a>
-
-          <!-- мобильная -->
-          <a href="tel:+79610893812" class="hero__btn hero__btn-mobile hero__btn-secondary">
-            Позвонить
-          </a>
-
-          <!-- десктоп -->
-          <a href="mailto:metiz-elektrod@mail.ru" class="hero__btn hero__btn-desktop hero__btn-secondary">
-            Написать на почту
-          </a>
-        </div>
-
+  </header>
+  <div id="main-content">
+  <!-- HERO С ПАТТЕРНОМ -->
+  <section class="hero-full">
+    <div class="animated-background">
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
       </div>
     </div>
-
-    <div class="about" id="about">
-      <!-- <div class="about__wrapper">
-        <div class="about__card" data-aos="zoom-in-up">
-          <h1>диллер завода автогенного оборудования "ДОНМЕТ"</h1>
-        </div>
-        <div class="about__card" data-aos="zoom-in-up">
-          <h1>официальный представитель ООО "Новооскольский электродный завод"</h1>
-        </div>
-        <div class="about__card" data-aos="zoom-in-up">
-          <h1>официальный представитель ООО "МОНОЛИТ-ГРУПП"</h1>
-        </div>
-      </div> -->
-      <section class="about-modern">
-        <div class="container">
-          <div class="about-header">
-            <h2>
-              Метиз Электрод — надёжный партнёр в промышленном снабжении с
-              2006 года
-            </h2>
-            <p>
-              Поставщик промышленных материалов и оборудования для предприятий
-              Камышина и Волгоградской области
-            </p>
-          </div>
-
-          <div class="content-grid">
-            <div class="main-content">
-              <p>
-                Более 15 лет мы обеспечиваем предприятия и организации всем
-                необходимым для эффективной работы:
-              </p>
-
-              <div class="features-list">
-                <div class="feature-item">
-                  <span class="feature-icon">⚙️</span>
-                  <span>Метизы и крепёж</span>
-                </div>
-                <div class="feature-item">
-                  <span class="feature-icon">🔥</span>
-                  <span>Сварочное оборудование</span>
-                </div>
-                <div class="feature-item">
-                  <span class="feature-icon">🛠️</span>
-                  <span>Инструмент</span>
-                </div>
-                <div class="feature-item">
-                  <span class="feature-icon">📦</span>
-                  <span>Промышленный прокат</span>
-                </div>
-                <div class="feature-item">
-                  <span class="feature-icon">👷</span>
-                  <span>Средства защиты</span>
-                </div>
-                <div class="feature-item">
-                  <span class="feature-icon">⛓️</span>
-                  <span>Такелаж</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="advantages-sidebar">
-              <h3>Наши преимущества</h3>
-              <div class="advantages-grid">
-                <div class="advantage-card">
-                  <div class="advantage-text">Работаем с НДС</div>
-                </div>
-                <div class="advantage-card">
-                  <div class="advantage-text">
-                    Наличный и безналичный расчет
-                  </div>
-                </div>
-                <div class="advantage-card">
-                  <div class="advantage-text">
-                    Широкий складской ассортимент
-                  </div>
-                </div>
-                <div class="advantage-card">
-                  <div class="advantage-text">
-                    Ориентация на потребности предприятий
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- <div class="about-footer">
-          <p>Мы ценим долгосрочное партнёрство и готовы стать вашим надёжным звеном в цепи поставок!</p>
-        </div> -->
-        </div>
-      </section>
-    </div>
-
-    <div class="catalog" id="catalog">
-      <!-- <h1 data-aos="zoom-in">Каталог</h1> -->
-      <div class="services__wrapper" data-aos="zoom-in">
-        <div class="services__card">
-          <h2>такелаж, грузоподъемные приспособления</h2>
-          <img src="image/test.png" loading="lazy" alt="такелаж, грузоподъемные приспособления" />
-        </div>
-        <div class="services__card">
-          <h2>сварочные материалы</h2>
-          <img src="image/electrode.png" loading="lazy" alt="сварочные материалы" />
-        </div>
-        <div class="services__card">
-          <h2>газосварочное оборудование</h2>
-          <img src="image/gazsvar.png" loading="lazy" alt="газосварочное оборудование" />
-        </div>
-        <div class="services__card">
-          <h2>ручная дуговая сварка</h2>
-          <img src="image/invertor.png" loading="lazy" alt="ручная дуговая сварка" />
-        </div>
-        <div class="services__card">
-          <h2>аргонодуговая сварка</h2>
-          <img src="image/argon.png" loading="lazy" alt="аргонодуговая сварка" />
-        </div>
-        <div class="services__card">
-          <h2>полуавтоматическая сварка</h2>
-          <img src="image/auto.png" loading="lazy" alt="полуавтоматическая сварка" />
-        </div>
-        <div class="services__card">
-          <h2>нержавеющий прокат</h2>
-          <img src="image/nerj.png" loading="lazy" alt="нержавеющий прокат" />
-        </div>
-        <div class="services__card">
-          <h2>нержавеющие метизы, такелаж, крепёж</h2>
-          <img src="image/nerj_krep.png" loading="lazy" alt="нержавеющие метизы, такелаж, крепёж" />
-        </div>
-        <div class="services__card">
-          <h2>бронзовый прокат</h2>
-          <img src="image/bronze.png" loading="lazy" alt="бронзовый прокат" />
-        </div>
-        <div class="services__card">
-          <h2>латунный прокат</h2>
-          <img src="image/brass.png" loading="lazy" alt="латунный прокат" />
-        </div>
-        <div class="services__card">
-          <h2>медный прокат</h2>
-          <img src="image/copper.png" loading="lazy" alt="медный прокат" />
-        </div>
-        <div class="services__card">
-          <h2>алюминевый прокат</h2>
-          <img src="image/alumium.png" loading="lazy" alt="алюминевый прокат" />
-        </div>
+    <div class="hero-full__content">
+      <h1>Крепёж и инструменты<br />— всё в одном месте</h1>
+      <p>Метизы, сварочное оборудование, инструмент и промышленный прокат для предприятий и частных клиентов</p>
+      <div class="hero-full__buttons">
+        <a href="#catalog" class="btn-primary">Смотреть каталог</a>
+        <a href="#" onclick="loadAboutPage(event)" class="btn-outline">О компании</a>
       </div>
     </div>
+  </section>
 
-    <div class="main" id="contact">
-      <!-- <div class="main__container">
-          <div class="main__content" data-aos="fade-down-right">
-            <h2>Заполните форму, и наш менеджер свяжется с вами</h2>
-          </div>
-          <div class="main__img--container" data-aos="zoom-in-up">
-            <div class="main__img--card form1" id="card-2">
-              <form
-                id="feedback-form"
-                class="form"
-                action="/feedback/process/process.php"
-                enctype="multipart/form-data"
-                novalidate
-              >
-                  
-                <input
-                  id="name"
-                  type="text"
-                  name="name"
-                  class="form-control"
-                  value=""
-                  placeholder="Имя"
-                  minlength="2"
-                  maxlength="30"
-                  required="required"
-                />
-
-               
-                <div class="input-group">
-                  <input
-                    id="phone"
-                    type="tel"
-                    name="phone"
-                    placeholder="Телефон"
-                    required="required"
-                    class="form-control"
-                    pattern="^\(?[0-9]{3}\)?(\s+)?[0-9]{3}-?[0-9]{2}-?[0-9]{2}$"
-                  />
-                </div>
-
-             
-                <textarea
-                  id="message"
-                  name="message"
-                  class="form-control"
-                  rows="3"
-                  placeholder="Сообщение"
-                  maxlength="500"
-                  required="required"
-                ></textarea>
-                <div id="invalid" class="invalid-feedback"></div>
-
-                <div class="text-right submit">
-                  <button
-                    type="submit"
-                    class="btn btn-primary position-relative"
-                  >
-                    Отправить
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div> -->
-      <div class="list">
-        <div class="info-shop">
-          <ul id="shops"></ul>
-        </div>
-
-        <!-- <div class="map-wrapper">
-            <button class="show-shops-btn">Список магазинов</button>
-            <div id="map"></div> -->
+  <!-- КАТАЛОГ -->
+  <section id="catalog" class="catalog-section">
+    <div class="catalog-section__header">
+      <h2>Каталог товаров</h2>
+      <p>Найдите всё необходимое для работы</p>
+      <div class="catalog-filters" id="catalogFilters">
+        <button class="filter-chip active" data-filter="all">Все</button>
+        <button class="filter-chip" data-filter="welding">Сварка</button>
+        <button class="filter-chip" data-filter="rigging">Такелаж</button>
+        <button class="filter-chip" data-filter="metal">Прокат</button>
+        <button class="filter-chip" data-filter="tools">Инструмент</button>
+        <button class="filter-chip" data-filter="fasteners">Крепёж</button>
       </div>
     </div>
-    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
 
-    <div class="contact">
-      <div class="contact__wrapper">
-        <div class="contact__card">
-          <h1>Менеджеры</h1>
-          <div class="contact__info">
-            <i class="fas fa-phone-alt"></i>
-            <a href="tel:+78445790099">+7(84457) 9-00-99</a>
-          </div>
-        </div>
-        <!-- <div class="contact__card">
-        <h1>Бухгалтерия</h1>
-        <div class="contact__info">
-          <i class="fas fa-phone-alt"></i>
-          <a href="tel:+78445791119">+7(84457) 9-11-19</a>
-        </div>
-      </div> -->
-        <div class="contact__card">
-          <h1>Коммерческий отдел</h1>
-          <div class="contact__info">
-            <i class="fas fa-phone-alt"></i>
-            <a href="tel:+79610893812">+7(961)089-38-12</a>
-          </div>
-        </div>
+  <!-- ПРЕИМУЩЕСТВА -->
+  <section class="features-section" id="features">
+    <div class="features-section__container">
+      <div class="feature-box"><i class="fas fa-truck"></i>
+        <h3>Доставка</h3>
+        <p>По Волгоградской области</p>
       </div>
-      <div class="mail">
-        <i class="fas fa-paper-plane"></i>
-        <a href="mailto:metiz-elektrod@mail.ru">metiz-elektrod@mail.ru</a>
+      <div class="feature-box"><i class="fas fa-file-invoice"></i>
+        <h3>Работаем с НДС</h3>
+        <p>Наличный и безналичный расчет</p>
+      </div>
+      <div class="feature-box"><i class="fas fa-warehouse"></i>
+        <h3>Широкий ассортимент</h3>
+        <p>Более 1000 позиций</p>
+      </div>
+      <div class="feature-box"><i class="fas fa-handshake"></i>
+        <h3>Надёжность</h3>
+        <p>Работаем с 2006 года</p>
       </div>
     </div>
+  </section>
 
-    <div class="footer__container">
-      <!-- <div class="footer__links">
-        <div class="footer__link--wrapper">
-          <div class="footer__link--items">
-            <h2>О нас</h2>
-            <a href="/sign__up">How it works</a> <a href="/">Testimonials</a>
-            <a href="/">Careers</a> <a href="/">Terms of Service</a>
-          </div>
-          <div class="footer__link--items">
-            <h2>Каталог</h2>
-            <a href="/">Contact</a> <a href="/">Support</a>
-            <a href="/">Destinations</a>
-          </div>
-          <div class="footer__link--items">
-            <h2>Контакты</h2>
-            <a href="/">Submit Video</a> <a href="/">Ambassadors</a>
-            <a href="/">Agency</a>
-          </div>
-        </div>
-      </div> -->
-      <section class="social__media">
-        <!-- <div class="social__media--wrap">
-        <div class="footer__logo">
-          <a href="/" id="footer__logo">Метиз Электрод</a>
-        </div>
-        <p class="website__rights">ИП Варгич В. Л.</p>
-      </div> -->
-        <div class="pattern">
-          <div class="pattern-track">
-            БОЛТЫ ГАЙКИ ШАЙБЫ ШПИЛЬКИ АНКЕРЫ ДЮБЕЛИ ШУРУПЫ ГВОЗДИ ЗАКЛЁПКИ
-            ШТИФТЫ ТРОСЫ ЦЕПИ ПРОВОЛОКА СВАРКА СВАРОЧНЫЕАППАРАТЫ ДРЕЛИ
-            ПЕРФОРАТОРЫ ШУРУПОВЁРТЫ ОТВЁРТКИ КЛЮЧИ МОЛОТКИ ПЛОСКОГУБЦЫ КУСАЧКИ
-            УГОЛКИ ПРОФИЛИ ЛИСТМЕТАЛЛ АРМАТУРА ТРУБЫ КРОНШТЕЙНЫ ФИКСАТОРЫ
-          </div>
-        </div>
-      </section>
+  <!-- БЕГУЩАЯ СТРОКА -->
+  <div class="pattern">
+    <div class="pattern-track">БОЛТЫ ГАЙКИ ШАЙБЫ ШПИЛЬКИ АНКЕРЫ ДЮБЕЛИ ШУРУПЫ ГВОЗДИ ЗАКЛЁПКИ ШТИФТЫ ТРОСЫ ЦЕПИ
+      ПРОВОЛОКА СВАРКА СВАРОЧНЫЕАППАРАТЫ ДРЕЛИ ПЕРФОРАТОРЫ ШУРУПОВЁРТЫ ОТВЁРТКИ КЛЮЧИ МОЛОТКИ ПЛОСКОГУБЦЫ КУСАЧКИ УГОЛКИ
+      ПРОФИЛИ ЛИСТМЕТАЛЛ АРМАТУРА ТРУБЫ КРОНШТЕЙНЫ ФИКСАТОРЫ</div>
+  </div>
+
+  <!-- ФУТЕР МИНИМАЛИСТИЧНЫЙ -->
+  <footer class="shop-footer">
+    <div class="shop-footer__container">
+      <span class="shop-footer__copy">&copy; <span id="currentYear">2024</span> Метиз Электрод</span>
+      <nav class="shop-footer__links">
+        <a href="index.html">Главная</a>
+        <a href="#catalog">Каталог</a>
+        <a href="about.html">О нас</a>
+      </nav>
+      <a href="tel:+79610893812" class="shop-footer__phone">+7 (961) 089-38-12</a>
     </div>
-  </main>
-  <script src="https://api-maps.yandex.ru/2.1/?lang=ru-RU&amp;apikey=33642748-9cc0-49a1-8516-cef1e3433a34"
-    type="text/javascript"></script>
-
+  </footer>
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru-RU&amp;apikey=33642748-9cc0-49a1-8516-cef1e3433a34" type="text/javascript"></script>
   <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
   <script src="js/object_manager.js" type="text/javascript"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
-  <!-- <script src="/feedback/vendors/jquery/jquery-3.3.1.min.js"></script> -->
-  <!-- <script src="/feedback/vendors/bootstrap/js/bootstrap.bundle.min.js"></script> -->
-  <!-- <script src="/feedback/js/process-forms.js"></script>
-    <script src="/feedback/js/main.js"></script>
-    <script>
-      (function (a) {
-        a.MaskedInput = function (f) {
-          if (!f || !f.elm || !f.format) {
-            return null;
-          }
-          if (!(this instanceof a.MaskedInput)) {
-            return new a.MaskedInput(f);
-          }
-          var o = this,
-            d = f.elm,
-            s = f.format,
-            i = f.allowed || "0123456789",
-            h =
-              f.allowedfx ||
-              function () {
-                return true;
-              },
-            p = f.separator || "/:-",
-            n = f.typeon || "_YMDhms",
-            c = f.onbadkey || function () {},
-            q = f.onfilled || function () {},
-            w = f.badkeywait || 0,
-            A = f.hasOwnProperty("preserve") ? !!f.preserve : true,
-            l = true,
-            y = false,
-            t = s,
-            j = (function () {
-              if (window.addEventListener) {
-                return function (E, C, D, B) {
-                  E.addEventListener(C, D, B === undefined ? false : B);
-                };
-              }
-              if (window.attachEvent) {
-                return function (D, B, C) {
-                  D.attachEvent("on" + B, C);
-                };
-              }
-              return function (D, B, C) {
-                D["on" + B] = C;
-              };
-            })(),
-            u = function () {
-              for (var B = d.value.length - 1; B >= 0; B--) {
-                for (var D = 0, C = n.length; D < C; D++) {
-                  if (d.value[B] === n[D]) {
-                    return false;
-                  }
-                }
-              }
-              return true;
-            },
-            x = function (C) {
-              try {
-                C.focus();
-                if (C.selectionStart >= 0) {
-                  return C.selectionStart;
-                }
-                if (document.selection) {
-                  var B = document.selection.createRange();
-                  return -B.moveStart("character", -C.value.length);
-                }
-                return -1;
-              } catch (D) {
-                return -1;
-              }
-            },
-            b = function (C, E) {
-              try {
-                if (C.selectionStart) {
-                  C.focus();
-                  C.setSelectionRange(E, E);
-                } else {
-                  if (C.createTextRange) {
-                    var B = C.createTextRange();
-                    B.move("character", E);
-                    B.select();
-                  }
-                }
-              } catch (D) {
-                return false;
-              }
-              return true;
-            },
-            m = function (D) {
-              D = D || window.event;
-              var C = "",
-                E = D.which,
-                B = D.type;
-              if (E === undefined || E === null) {
-                E = D.keyCode;
-              }
-              if (E === undefined || E === null) {
-                return "";
-              }
-              switch (E) {
-                case 8:
-                  C = "bksp";
-                  break;
-                case 46:
-                  C = B === "keydown" ? "del" : ".";
-                  break;
-                case 16:
-                  C = "shift";
-                  break;
-                case 0:
-                case 9:
-                case 13:
-                  C = "etc";
-                  break;
-                case 37:
-                case 38:
-                case 39:
-                case 40:
-                  C =
-                    !D.shiftKey && D.charCode !== 39 && D.charCode !== undefined
-                      ? "etc"
-                      : String.fromCharCode(E);
-                  break;
-                default:
-                  C = String.fromCharCode(E);
-                  break;
-              }
-              return C;
-            },
-            v = function (B, C) {
-              if (B.preventDefault) {
-                B.preventDefault();
-              }
-              B.returnValue = C || false;
-            },
-            k = function (B) {
-              var D = x(d),
-                F = d.value,
-                E = "",
-                C = true;
-              switch (C) {
-                case i.indexOf(B) !== -1:
-                  D = D + 1;
-                  if (D > s.length) {
-                    return false;
-                  }
-                  while (p.indexOf(F.charAt(D - 1)) !== -1 && D <= s.length) {
-                    D = D + 1;
-                  }
-                  if (!h(o, B, D)) {
-                    c(B);
-                    return false;
-                  }
-                  E = F.substr(0, D - 1) + B + F.substr(D);
-                  if (
-                    i.indexOf(F.charAt(D)) === -1 &&
-                    n.indexOf(F.charAt(D)) === -1
-                  ) {
-                    D = D + 1;
-                  }
-                  break;
-                case B === "bksp":
-                  D = D - 1;
-                  if (D < 0) {
-                    return false;
-                  }
-                  while (
-                    i.indexOf(F.charAt(D)) === -1 &&
-                    n.indexOf(F.charAt(D)) === -1 &&
-                    D > 1
-                  ) {
-                    D = D - 1;
-                  }
-                  E = F.substr(0, D) + s.substr(D, 1) + F.substr(D + 1);
-                  break;
-                case B === "del":
-                  if (D >= F.length) {
-                    return false;
-                  }
-                  while (p.indexOf(F.charAt(D)) !== -1 && F.charAt(D) !== "") {
-                    D = D + 1;
-                  }
-                  E = F.substr(0, D) + s.substr(D, 1) + F.substr(D + 1);
-                  D = D + 1;
-                  break;
-                case B === "etc":
-                  return true;
-                default:
-                  return false;
-              }
-              d.value = "";
-              d.value = E;
-              b(d, D);
-              return false;
-            },
-            g = function (B) {
-              if (
-                i.indexOf(B) === -1 &&
-                B !== "bksp" &&
-                B !== "del" &&
-                B !== "etc"
-              ) {
-                var C = x(d);
-                y = true;
-                c(B);
-                setTimeout(function () {
-                  y = false;
-                  b(d, C);
-                }, w);
-                return false;
-              }
-              return true;
-            },
-            z = function (C) {
-              if (!l) {
-                return true;
-              }
-              C = C || event;
-              if (y) {
-                v(C);
-                return false;
-              }
-              var B = m(C);
-              if ((C.metaKey || C.ctrlKey) && (B === "X" || B === "V")) {
-                v(C);
-                return false;
-              }
-              if (C.metaKey || C.ctrlKey) {
-                return true;
-              }
-              if (d.value === "") {
-                d.value = s;
-                b(d, 0);
-              }
-              if (B === "bksp" || B === "del") {
-                k(B);
-                v(C);
-                return false;
-              }
-              return true;
-            },
-            e = function (C) {
-              if (!l) {
-                return true;
-              }
-              C = C || event;
-              if (y) {
-                v(C);
-                return false;
-              }
-              var B = m(C);
-              if (B === "etc" || C.metaKey || C.ctrlKey || C.altKey) {
-                return true;
-              }
-              if (B !== "bksp" && B !== "del" && B !== "shift") {
-                if (!g(B)) {
-                  v(C);
-                  return false;
-                }
-                if (k(B)) {
-                  if (u()) {
-                    q(o, x(d));
-                  }
-                  v(C, true);
-                  return true;
-                }
-                if (u()) {
-                  q(o, x(d));
-                }
-                v(C);
-                return false;
-              }
-              return false;
-            },
-            r = function () {
-              if (
-                !d.tagName ||
-                (d.tagName.toUpperCase() !== "INPUT" &&
-                  d.tagName.toUpperCase() !== "TEXTAREA")
-              ) {
-                return null;
-              }
-              o.elm = d;
-              if (!A || d.value === "") {
-                d.value = s;
-              }
-              j(d, "keydown", function (B) {
-                z(B);
-              });
-              j(d, "keypress", function (B) {
-                e(B);
-              });
-              j(d, "focus", function () {
-                t = d.value;
-              });
-              j(d, "blur", function () {
-                if (d.value !== t && d.onchange) {
-                  d.onchange();
-                }
-              });
-              return o;
-            };
-          o.resetField = function () {
-            d.value = s;
-          };
-          o.setAllowed = function (B) {
-            i = B;
-            o.resetField();
-          };
-          o.setCursorPos = function (B) {
-            b(d, B);
-          };
-          o.setFormat = function (B) {
-            s = B;
-            o.resetField();
-          };
-          o.setSeparator = function (B) {
-            p = B;
-            o.resetField();
-          };
-          o.setTypeon = function (B) {
-            n = B;
-            o.resetField();
-          };
-          o.setEnabled = function (B) {
-            l = B;
-          };
-          return r();
-        };
-      })(window);
-
-      MaskedInput({
-        elm: document.getElementById("phone"), // select by id
-        format: "(___)___-__-__",
-        separator: "()-",
-      });
-    </script> -->
-  <!-- <script src="js/jquery.min.js"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>AOS.init();</script>
   <script src="js/app.js"></script>
+  </div>
 </body>
 
 </html>

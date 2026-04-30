@@ -1,3 +1,4 @@
+function initYandexMap() {
 var myMap;
 var placemarkCollections = {};
 var placemarkList = {};
@@ -439,3 +440,4 @@ function addModalStyles() {
 
 // Добавляем стили при загрузке страницы
 addModalStyles();
+}

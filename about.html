@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>О нас — Метиз Электрод</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+  <link rel="shortcut icon" href="image/favicon.ico" type="image/ico" />
+</head>
+<body>
+
+  <!-- ШАПКА -->
+  <header class="shop-header">
+    <div class="shop-header__container">
+      <a href="index.html" class="shop-logo">Метиз<span>Электрод</span></a>
+      <nav class="shop-nav" id="shopNav">
+        <a href="index.html">Главная</a>
+        <a href="index.html#catalog">Каталог</a>
+        <a href="about.html" class="active">О нас</a>
+      </nav>
+      <div class="shop-header__actions">
+        <a href="index.html" class="shop-header__login"><i class="fas fa-user"></i> <span>Войти</span></a>
+        <a href="index.html" class="shop-header__cart"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- О НАС -->
+  <section class="about-page">
+    <div class="about-page__container">
+      <h1>О компании</h1>
+      <div class="about-content">
+        <div class="about-text">
+          <h2>Метиз Электрод — надёжный партнёр с 2006 года</h2>
+          <p>Более 15 лет мы обеспечиваем предприятия и организации всем необходимым. Поставщик промышленных материалов и оборудования для Камышина и Волгоградской области.</p>
+          <div class="about-features">
+            <span>⚙️ Метизы и крепёж</span><span>🔥 Сварочное оборудование</span>
+            <span>🛠️ Инструмент</span><span>📦 Промышленный прокат</span>
+            <span>👷 Средства защиты</span><span>⛓️ Такелаж</span>
+          </div>
+        </div>
+        <div class="about-advantages">
+          <div class="advantage-item">Работаем с НДС</div>
+          <div class="advantage-item">Наличный и безналичный расчет</div>
+          <div class="advantage-item">Широкий складской ассортимент</div>
+          <div class="advantage-item">Ориентация на потребности предприятий</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- КОНТАКТЫ -->
+  <section class="contact-page">
+    <div class="contact-page__container">
+      <h2>Контакты</h2>
+      <div class="contact-cards">
+        <div class="contact-card"><h3>Менеджеры</h3><p><i class="fas fa-phone-alt"></i> <a href="tel:+78445790099">+7(84457) 9-00-99</a></p></div>
+        <div class="contact-card"><h3>Коммерческий отдел</h3><p><i class="fas fa-phone-alt"></i> <a href="tel:+79610893812">+7(961)089-38-12</a></p></div>
+        <div class="contact-card"><h3>Почта</h3><p><i class="fas fa-envelope"></i> <a href="mailto:metiz-elektrod@mail.ru">metiz-elektrod@mail.ru</a></p></div>
+      </div>
+      <!-- КАРТА -->
+      <div class="contact-map">
+        <div class="list">
+          <div class="info-shop"><ul id="shops"></ul></div>
+          <div class="map-wrapper">
+            <button class="show-shops-btn">Список магазинов</button>
+            <div id="map"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ФУТЕР -->
+  <footer class="shop-footer">
+    <div class="shop-footer__container">
+      <span class="shop-footer__copy">&copy; <span id="currentYear">2024</span> Метиз Электрод</span>
+      <nav class="shop-footer__links">
+        <a href="index.html">Главная</a>
+        <a href="index.html#catalog">Каталог</a>
+        <a href="about.html">О нас</a>
+      </nav>
+      <a href="tel:+79610893812" class="shop-footer__phone">+7 (961) 089-38-12</a>
+    </div>
+  </footer>
+
+  <!-- Яндекс.Карты -->
+  <script src="https://api-maps.yandex.ru/2.1/?lang=ru-RU&amp;apikey=33642748-9cc0-49a1-8516-cef1e3433a34" type="text/javascript"></script>
+  <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+  <script src="js/object_manager.js" type="text/javascript"></script>
+
+  <!-- Общий JS -->
+  <script>
+    // Мобильное меню
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
+      this.classList.toggle('open');
+      document.getElementById('shopNav')?.classList.toggle('open');
+    });
+
+    // Корзина
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    function updateCartCount() {
+      const count = cart.reduce((s,i) => s + i.quantity, 0);
+      const el = document.getElementById('cart-count');
+      if (el) el.textContent = count;
+    }
+    updateCartCount();
+
+    // Магазины
+    const shops = document.getElementById('shops');
+    if (shops) {
+      shops.addEventListener('click', function(e) {
+        if (e.target.tagName === 'LI') {
+          document.querySelectorAll('#shops li').forEach(li => li.classList.remove('active'));
+          e.target.classList.add('active');
+        }
+      });
+    }
+
+    // Кнопка списка
+    const showBtn = document.querySelector('.show-shops-btn');
+    const shopPanel = document.querySelector('.info-shop');
+    if (showBtn && shopPanel) {
+      showBtn.addEventListener('click', () => shopPanel.classList.toggle('open'));
+    }
+  </script>
+</body>
+</html>
