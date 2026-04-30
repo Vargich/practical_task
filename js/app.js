@@ -1,29 +1,27 @@
 // ===== СОСТОЯНИЕ =====
 let currentPage = 'home';
-const homeHTML = document.getElementById('main-content')?.innerHTML || '';
 
-// ===== YANDEX MAPS ГЛОБАЛЬНО =====
-let yandexMapsLoaded = false;
-let yandexMapsLoading = false;
-const yandexMapsCallbacks = [];
+// Сохраняем оригинальный HTML главной ТОЛЬКО при первой загрузке
+let homeHTML = '';
+document.addEventListener('DOMContentLoaded', () => {
+  const main = document.getElementById('main-content');
+  if (main && window.location.pathname.includes('index')) {
+    homeHTML = main.innerHTML;
+  }
+});
 
-
+// ===== YANDEX MAPS =====
 function initMapInContainer() {
   const mapContainer = document.getElementById('map');
   if (!mapContainer) return;
-  
-  // Очищаем
   mapContainer.innerHTML = '';
-  
-  // Ждём ymaps
   if (typeof ymaps !== 'undefined') {
     ymaps.ready(() => {
-      if (typeof initYandexMap === 'function') {
-        initYandexMap();
-      }
+      if (typeof initYandexMap === 'function') initYandexMap();
     });
   }
 }
+
 // ===== МОДАЛЬНОЕ ОКНО =====
 window.openAuthModal = function(e) {
   if (e) e.preventDefault();
@@ -66,10 +64,7 @@ window.handleLogin = function(e) {
   if (user) {
     localStorage.setItem('currentUser', JSON.stringify(user));
     showMsg('Добро пожаловать, ' + user.name + '!', false);
-    setTimeout(() => {
-      closeAuthModal();
-      updateUserUI(user.name);
-    }, 1000);
+    setTimeout(() => { closeAuthModal(); updateUserUI(user.name); }, 1000);
   } else showMsg('Неверный email или пароль', true);
 };
 
@@ -92,19 +87,13 @@ function showMsg(msg, err) {
   el.innerHTML = '<span style="color:' + (err ? 'red' : 'green') + '">' + msg + '</span>';
 }
 
-// ===== ОТОБРАЖЕНИЕ ИМЕНИ ВОШЕДШЕГО =====
+// ===== ОТОБРАЖЕНИЕ ИМЕНИ =====
 function updateUserUI(name) {
-  const loginBtn = document.querySelector('.shop-header__login');
+  const loginBtn = document.getElementById('headerLoginBtn');
   if (loginBtn) {
     loginBtn.innerHTML = '<i class="fas fa-user-check"></i> <span>' + name + '</span>';
-    loginBtn.onclick = function(e) {
-      e.preventDefault();
-      if (confirm('Выйти из аккаунта?')) {
-        localStorage.removeItem('currentUser');
-        loginBtn.innerHTML = '<i class="fas fa-user"></i> <span>Войти</span>';
-        loginBtn.onclick = function(e) { openAuthModal(e); };
-      }
-    };
+    loginBtn.onclick = function(e) { e.preventDefault(); window.location.href = 'account.html'; };
+    loginBtn.removeAttribute('onclick');
   }
 }
 
@@ -143,16 +132,9 @@ document.querySelectorAll('#shopNav a').forEach(link => {
 document.querySelectorAll('#shopNav a[data-page]').forEach(link => {
   link.addEventListener('click', function(e) {
     const page = this.dataset.page;
-    if (page === 'home') {
-      e.preventDefault();
-      goHome();
-    } else if (page === 'catalog') {
-      e.preventDefault();
-      goToCatalog();
-    } else if (page === 'about') {
-      e.preventDefault();
-      loadAboutPage();
-    }
+    if (page === 'home') { e.preventDefault(); goHome(); }
+    else if (page === 'catalog') { e.preventDefault(); goToCatalog(); }
+    else if (page === 'about') { e.preventDefault(); loadAboutPage(); }
     updateActiveNav(page);
   });
 });
@@ -168,26 +150,19 @@ window.goHome = function() {
     initPattern();
     initShopsAndMap();
     updateCartCount();
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
   } else {
     location.reload();
   }
 };
 
 window.goToCatalog = function() {
-  if (currentPage === 'about') {
-    const main = document.getElementById('main-content');
-    if (main && homeHTML) {
-      main.innerHTML = homeHTML;
-      initCatalog();
-      initPattern();
-      updateCartCount();
-    }
-  }
+  if (currentPage === 'about') goHome();
   currentPage = 'catalog';
   updateActiveNav('catalog');
   setTimeout(() => {
     document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
-  }, 100);
+  }, 200);
 };
 
 window.loadAboutPage = function(e) {
@@ -196,57 +171,16 @@ window.loadAboutPage = function(e) {
   if (!main) return;
   currentPage = 'about';
   updateActiveNav('about');
-
   main.innerHTML = `
-    <section class="about-page">
-      <div class="about-page__container">
-        <h1>О компании</h1>
-        <div class="about-content">
-          <div class="about-text">
-            <h2>Метиз Электрод — надёжный партнёр с 2006 года</h2>
-            <p>Более 15 лет мы обеспечиваем предприятия и организации всем необходимым. Поставщик промышленных материалов и оборудования для Камышина и Волгоградской области.</p>
-            <div class="about-features">
-              <span>⚙️ Метизы и крепёж</span><span>🔥 Сварочное оборудование</span>
-              <span>🛠️ Инструмент</span><span>📦 Промышленный прокат</span>
-              <span>👷 Средства защиты</span><span>⛓️ Такелаж</span>
-            </div>
-          </div>
-          <div class="about-advantages">
-            <div class="advantage-item">Работаем с НДС</div>
-            <div class="advantage-item">Наличный и безналичный расчет</div>
-            <div class="advantage-item">Широкий складской ассортимент</div>
-            <div class="advantage-item">Ориентация на потребности предприятий</div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="contact-page">
-      <div class="contact-page__container">
-        <h2>Контакты</h2>
-        <div class="contact-cards">
-          <div class="contact-card"><h3>Менеджеры</h3><p><i class="fas fa-phone-alt"></i> <a href="tel:+78445790099">+7(84457) 9-00-99</a></p></div>
-          <div class="contact-card"><h3>Коммерческий отдел</h3><p><i class="fas fa-phone-alt"></i> <a href="tel:+79610893812">+7(961)089-38-12</a></p></div>
-          <div class="contact-card"><h3>Почта</h3><p><i class="fas fa-envelope"></i> <a href="mailto:metiz-elektrod@mail.ru">metiz-elektrod@mail.ru</a></p></div>
-        </div>
-        <div class="contact-map">
-          <div class="list">
-            <div class="info-shop"><ul id="shops"></ul></div>
-            <div class="map-wrapper"><button class="show-shops-btn">Список магазинов</button><div id="map"></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <section class="about-page"><div class="about-page__container"><h1>О компании</h1><div class="about-content"><div class="about-text"><h2>Метиз Электрод — надёжный партнёр с 2006 года</h2><p>Более 15 лет мы обеспечиваем предприятия и организации всем необходимым. Поставщик промышленных материалов и оборудования для Камышина и Волгоградской области.</p><div class="about-features"><span>⚙️ Метизы и крепёж</span><span>🔥 Сварочное оборудование</span><span>🛠️ Инструмент</span><span>📦 Промышленный прокат</span><span>👷 Средства защиты</span><span>⛓️ Такелаж</span></div></div><div class="about-advantages"><div class="advantage-item">Работаем с НДС</div><div class="advantage-item">Наличный и безналичный расчет</div><div class="advantage-item">Широкий складской ассортимент</div><div class="advantage-item">Ориентация на потребности предприятий</div></div></div></div></section>
+    <section class="contact-page"><div class="contact-page__container"><h2>Контакты</h2><div class="contact-cards"><div class="contact-card"><h3>Менеджеры</h3><p><i class="fas fa-phone-alt"></i> <a href="tel:+78445790099">+7(84457) 9-00-99</a></p></div><div class="contact-card"><h3>Коммерческий отдел</h3><p><i class="fas fa-phone-alt"></i> <a href="tel:+79610893812">+7(961)089-38-12</a></p></div><div class="contact-card"><h3>Почта</h3><p><i class="fas fa-envelope"></i> <a href="mailto:metiz-elektrod@mail.ru">metiz-elektrod@mail.ru</a></p></div></div><div class="contact-map"><div class="list"><div class="info-shop"><ul id="shops"></ul></div><div class="map-wrapper"><button class="show-shops-btn">Список магазинов</button><div id="map"></div></div></div></div></div></section>
   `;
   window.scrollTo({ top: 0, behavior: 'smooth' });
   initShopsAndMap();
-
-  // Инициализируем карту
-    setTimeout(() => {
-    initMapInContainer();
-  }, 300);
+  setTimeout(() => initMapInContainer(), 300);
 };
 
-// ===== ПОДСВЕТКА МЕНЮ ПРИ СКРОЛЛЕ =====
+// ===== ПОДСВЕТКА МЕНЮ =====
 let scrollTimeout;
 window.addEventListener('scroll', () => {
   if (currentPage !== 'home') return;
@@ -254,14 +188,7 @@ window.addEventListener('scroll', () => {
   scrollTimeout = setTimeout(() => {
     const catalog = document.getElementById('catalog');
     if (!catalog) return;
-    const scrollPos = window.scrollY + 200;
-    const catalogTop = catalog.offsetTop;
-    
-    if (scrollPos < catalogTop) {
-      updateActiveNav('home');
-    } else {
-      updateActiveNav('catalog');
-    }
+    updateActiveNav(window.scrollY + 200 < catalog.offsetTop ? 'home' : 'catalog');
   }, 100);
 });
 
@@ -295,8 +222,7 @@ const ITEMS_PER_PAGE = 8;
 
 function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); updateCartSidebar(); }
 function updateCartCount() {
-  const count = cart.reduce((s,i) => s + i.quantity, 0);
-  document.querySelectorAll('#cart-count').forEach(el => el.textContent = count);
+  document.querySelectorAll('#cart-count').forEach(el => el.textContent = cart.reduce((s,i) => s + i.quantity, 0));
 }
 
 window.addToCart = function(id) {
@@ -307,7 +233,7 @@ window.addToCart = function(id) {
   showToast(p.name + ' добавлен в корзину');
 };
 
-window.removeFromCart = function(id) { cart = cart.filter(x => x.id !== id); saveCart(); };
+window.removeFromCart = function(id) { cart = cart.filter(x => x.id !== id); saveCart(); updateCartSidebar(); showToast('Товар удалён'); };
 window.updateQty = function(id, delta) {
   const item = cart.find(x => x.id === id);
   if (!item) return;
@@ -333,21 +259,20 @@ window.filterCatalog = function(cat) {
 };
 
 function getFilteredProducts() {
-  let filtered = products;
-  if (currentFilter !== 'all') filtered = filtered.filter(p => p.category === currentFilter);
-  if (currentSearch) filtered = filtered.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
-  return filtered;
+  let f = products;
+  if (currentFilter !== 'all') f = f.filter(p => p.category === currentFilter);
+  if (currentSearch) f = f.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
+  return f;
 }
 
 function renderProducts() {
   const grid = document.getElementById('productsGrid');
   if (!grid) return;
   const filtered = getFilteredProducts();
-  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+  const total = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const start = (currentCatalogPage - 1) * ITEMS_PER_PAGE;
-  const pageItems = filtered.slice(start, start + ITEMS_PER_PAGE);
-
-  grid.innerHTML = pageItems.map(p => `
+  const items = filtered.slice(start, start + ITEMS_PER_PAGE);
+  grid.innerHTML = items.map(p => `
     <div class="product-card">
       ${p.badge ? '<span class="product-card__badge '+p.badge+'">'+(p.badge==='hit'?'Хит':'Новинка')+'</span>' : ''}
       <div class="product-card__img"><img src="${p.image}" alt="${p.name}" loading="lazy" /></div>
@@ -355,129 +280,112 @@ function renderProducts() {
         <span class="product-card__category">${getCategoryName(p.category)}</span>
         <h3>${p.name}</h3>
         <div class="product-card__rating">${'★'.repeat(Math.floor(p.rating||0))} <span>(${p.reviews||0})</span></div>
-        <div class="product-card__price">
-          <span class="product-card__price-current">${p.price.toLocaleString()} ₽</span>
-          ${p.oldPrice ? '<span class="product-card__price-old">'+p.oldPrice.toLocaleString()+' ₽</span>' : ''}
-        </div>
+        <div class="product-card__price"><span class="product-card__price-current">${p.price.toLocaleString()} ₽</span>${p.oldPrice ? '<span class="product-card__price-old">'+p.oldPrice.toLocaleString()+' ₽</span>' : ''}</div>
         <button class="product-card__btn" onclick="addToCart(${p.id})">В корзину</button>
       </div>
-    </div>
-  `).join('');
-
+    </div>`).join('');
   let pag = document.getElementById('pagination');
   if (!pag) { pag = document.createElement('div'); pag.id = 'pagination'; pag.className = 'pagination'; grid.after(pag); }
-  if (totalPages <= 1) { pag.innerHTML = ''; return; }
-  pag.innerHTML = Array.from({length: totalPages}, (_,i) => 
-    `<button class="${i+1===currentCatalogPage?'active':''}" onclick="goToPage(${i+1})">${i+1}</button>`
-  ).join('');
+  pag.innerHTML = total <= 1 ? '' : Array.from({length: total}, (_,i) => `<button class="${i+1===currentCatalogPage?'active':''}" onclick="goToPage(${i+1})">${i+1}</button>`).join('');
 }
 
-window.goToPage = function(page) { 
-  currentCatalogPage = page; 
-  renderProducts(); 
-  document.getElementById('catalog')?.scrollIntoView({behavior:'smooth'}); 
-};
+window.goToPage = function(p) { currentCatalogPage = p; renderProducts(); document.getElementById('catalog')?.scrollIntoView({behavior:'smooth'}); };
 
-function getCategoryName(cat) {
-  const map = { welding:'Сварка', rigging:'Такелаж', metal:'Прокат', tools:'Инструмент', fasteners:'Крепёж' };
-  return map[cat] || cat;
+function getCategoryName(c) {
+  const m = { welding:'Сварка', rigging:'Такелаж', metal:'Прокат', tools:'Инструмент', fasteners:'Крепёж' };
+  return m[c] || c;
 }
 
-// Корзина
-window.openCart = function() { 
-  document.getElementById('cartSidebar')?.classList.add('open'); 
-  document.getElementById('cartOverlay')?.classList.add('open'); 
-  updateCartSidebar(); 
+// ===== КОРЗИНА =====
+window.openCart = function(e) {
+  if (e) e.preventDefault();
+  document.getElementById('cartOverlay')?.classList.add('open');
+  document.getElementById('cartSidebar')?.classList.add('open');
+  updateCartSidebar();
 };
-window.closeCart = function() { 
-  document.getElementById('cartSidebar')?.classList.remove('open'); 
-  document.getElementById('cartOverlay')?.classList.remove('open'); 
+window.closeCart = function() {
+  document.getElementById('cartOverlay')?.classList.remove('open');
+  document.getElementById('cartSidebar')?.classList.remove('open');
 };
 
 function updateCartSidebar() {
   const items = document.getElementById('cartItems');
   const total = document.getElementById('cartTotal');
   if (!items || !total) return;
-  if (cart.length === 0) { 
-    items.innerHTML = '<p style="text-align:center;color:#9ca3af;padding:2rem;">Корзина пуста</p>'; 
-    total.textContent = '0 ₽'; 
-    return; 
+  if (cart.length === 0) {
+    items.innerHTML = '<div style="text-align:center;padding:2rem;color:#9ca3af;"><i class="fas fa-shopping-cart" style="font-size:3rem;display:block;margin-bottom:1rem;"></i>Корзина пуста</div>';
+    total.textContent = '0 ₽'; return;
   }
   items.innerHTML = cart.map(item => `
     <div class="cart-item">
       <div class="cart-item__img"><img src="${item.image}" alt="${item.name}" /></div>
-      <div class="cart-item__info">
-        <h4>${item.name}</h4>
-        <span style="color:#FF5733;font-weight:600;">${item.price.toLocaleString()} ₽</span>
-        <div class="cart-item__qty">
-          <button onclick="updateQty(${item.id},-1)">−</button><span>${item.quantity}</span><button onclick="updateQty(${item.id},1)">+</button>
-        </div>
-        <button class="cart-item__remove" onclick="removeFromCart(${item.id})">Удалить</button>
+      <div class="cart-item__info"><h4>${item.name}</h4><div class="cart-item__price">${item.price.toLocaleString()} ₽</div>
+        <div class="cart-item__qty"><button onclick="updateQty(${item.id},-1)">−</button><span>${item.quantity}</span><button onclick="updateQty(${item.id},1)">+</button></div>
       </div>
-    </div>
-  `).join('');
+      <button class="cart-item__remove" onclick="removeFromCart(${item.id})">&times;</button>
+    </div>`).join('');
   total.textContent = cart.reduce((s,i) => s + i.price * i.quantity, 0).toLocaleString() + ' ₽';
 }
 
+window.checkout = function() {
+  if (cart.length === 0) return alert('Корзина пуста');
+  const user = JSON.parse(localStorage.getItem('currentUser'));
+  if (!user) { closeCart(); openAuthModal(); return alert('Войдите для оформления заказа'); }
+  const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+  orders.push({ id: Date.now(), items: [...cart], total: cart.reduce((s,i) => s + i.price * i.quantity, 0), date: new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'}), time: new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}), status: 'processing', userName: user.name, userEmail: user.email });
+  localStorage.setItem('orders', JSON.stringify(orders));
+  cart = []; saveCart(); updateCartSidebar(); closeCart();
+  showToast('Заказ оформлен!');
+  setTimeout(() => { if (confirm('Перейти в личный кабинет?')) location.href = 'account.html'; }, 1500);
+};
+
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 function initCatalog() {
-  document.querySelectorAll('.filter-chip').forEach(btn => {
-    btn.addEventListener('click', () => filterCatalog(btn.dataset.filter));
-  });
-  const searchInput = document.getElementById('globalSearch');
-  if (searchInput) {
-    searchInput.addEventListener('input', e => {
-      currentSearch = e.target.value;
-      currentCatalogPage = 1;
-      renderProducts();
-      document.getElementById('catalog')?.scrollIntoView({behavior:'smooth'});
-    });
-    searchInput.addEventListener('focus', () => {
-      document.getElementById('catalog')?.scrollIntoView({behavior:'smooth'});
-    });
-    searchInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        document.getElementById('catalog')?.scrollIntoView({behavior:'smooth'});
-      }
-    });
+  document.querySelectorAll('.filter-chip').forEach(b => b.addEventListener('click', () => filterCatalog(b.dataset.filter)));
+  const s = document.getElementById('globalSearch');
+  if (s) {
+    s.addEventListener('input', e => { currentSearch = e.target.value; currentCatalogPage = 1; renderProducts(); document.getElementById('catalog')?.scrollIntoView({behavior:'smooth'}); });
+    s.addEventListener('focus', () => document.getElementById('catalog')?.scrollIntoView({behavior:'smooth'}));
+    s.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('catalog')?.scrollIntoView({behavior:'smooth'}); } });
   }
   renderProducts();
 }
 
 function initPattern() {
-  const pattern = document.querySelector('.pattern-track');
-  if (pattern) new IntersectionObserver(entries => {
-    entries.forEach(e => { 
-      if (e.isIntersecting) pattern.classList.add('animate'); 
-      else pattern.classList.remove('animate'); 
-    });
-  }, {threshold:0.1}).observe(pattern);
+  const p = document.querySelector('.pattern-track');
+  if (p) new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) p.classList.add('animate'); else p.classList.remove('animate'); }), {threshold:0.1}).observe(p);
 }
 
 function initShopsAndMap() {
   const shops = document.getElementById('shops');
-  if (shops) shops.addEventListener('click', function(e) {
-    if (e.target.tagName === 'LI') {
-      document.querySelectorAll('#shops li').forEach(li => li.classList.remove('active'));
-      e.target.classList.add('active');
-    }
-  });
-  const showBtn = document.querySelector('.show-shops-btn');
-  const shopPanel = document.querySelector('.info-shop');
-  if (showBtn && shopPanel) showBtn.addEventListener('click', () => shopPanel.classList.toggle('open'));
+  if (shops) shops.addEventListener('click', function(e) { if (e.target.tagName === 'LI') { document.querySelectorAll('#shops li').forEach(l => l.classList.remove('active')); e.target.classList.add('active'); } });
+  const btn = document.querySelector('.show-shops-btn');
+  const panel = document.querySelector('.info-shop');
+  if (btn && panel) btn.addEventListener('click', () => panel.classList.toggle('open'));
 }
 
 // ===== СТАРТ =====
 document.addEventListener('DOMContentLoaded', () => {
-  initCatalog();
-  initPattern();
-  initShopsAndMap();
-  updateCartCount();
-  updateActiveNav('home');
-    if (window.location.pathname.includes('about')) {
+  if (document.getElementById('productsGrid')) {
+    initCatalog();
+    initPattern();
+    updateCartCount();
+    updateActiveNav('home');
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+  }
+  if (document.getElementById('shops') && document.getElementById('map')) {
+    initShopsAndMap();
     setTimeout(initMapInContainer, 300);
   }
 });
 
-document.getElementById('currentYear').textContent = new Date().getFullYear();
+// ===== ИЗБРАННОЕ =====
+let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+window.toggleWishlist = function(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  const exist = wishlist.find(i => i.id === id);
+  exist ? wishlist = wishlist.filter(i => i.id !== id) : wishlist.push(p);
+  localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  showToast(exist ? 'Удалено из избранного' : 'Добавлено в избранное');
+};

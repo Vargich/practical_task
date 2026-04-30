@@ -64,99 +64,103 @@
         <a href="#about" data-page="about">О нас</a>
       </nav>
       <div class="shop-header__actions">
-        <a href="#" onclick="openAuthModal(event)" class="shop-header__login"><i class="fas fa-user"></i>
-          <span>Войти</span></a>
-        <a href="#" class="shop-header__cart" onclick="openCart()"><i class="fas fa-shopping-cart"></i> <span
-            id="cart-count">0</span></a>
+        <a href="#" class="shop-header__login" id="headerLoginBtn" onclick="openAuthModal(event)">
+          <i class="fas fa-user"></i> <span>Войти</span>
+        </a>
+        <a href="#" class="shop-header__cart" onclick="openCart(event)">
+          <i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span>
+        </a>
       </div>
       <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
     </div>
   </header>
   <div id="main-content">
-  <!-- HERO С ПАТТЕРНОМ -->
-  <section class="hero-full">
-    <div class="animated-background">
-      <div class="floating-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-        <div class="shape shape-4"></div>
+    <!-- HERO С ПАТТЕРНОМ -->
+    <section class="hero-full">
+      <div class="animated-background">
+        <div class="floating-shapes">
+          <div class="shape shape-1"></div>
+          <div class="shape shape-2"></div>
+          <div class="shape shape-3"></div>
+          <div class="shape shape-4"></div>
+        </div>
       </div>
-    </div>
-    <div class="hero-full__content">
-      <h1>Крепёж и инструменты<br />— всё в одном месте</h1>
-      <p>Метизы, сварочное оборудование, инструмент и промышленный прокат для предприятий и частных клиентов</p>
-      <div class="hero-full__buttons">
-        <a href="#catalog" class="btn-primary">Смотреть каталог</a>
-        <a href="#" onclick="loadAboutPage(event)" class="btn-outline">О компании</a>
+      <div class="hero-full__content">
+        <h1>Крепёж и инструменты<br />— всё в одном месте</h1>
+        <p>Метизы, сварочное оборудование, инструмент и промышленный прокат для предприятий и частных клиентов</p>
+        <div class="hero-full__buttons">
+          <a href="#catalog" class="btn-primary">Смотреть каталог</a>
+          <a href="#" onclick="loadAboutPage(event)" class="btn-outline">О компании</a>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- КАТАЛОГ -->
-  <section id="catalog" class="catalog-section">
-    <div class="catalog-section__header">
-      <h2>Каталог товаров</h2>
-      <p>Найдите всё необходимое для работы</p>
-      <div class="catalog-filters" id="catalogFilters">
-        <button class="filter-chip active" data-filter="all">Все</button>
-        <button class="filter-chip" data-filter="welding">Сварка</button>
-        <button class="filter-chip" data-filter="rigging">Такелаж</button>
-        <button class="filter-chip" data-filter="metal">Прокат</button>
-        <button class="filter-chip" data-filter="tools">Инструмент</button>
-        <button class="filter-chip" data-filter="fasteners">Крепёж</button>
+    <!-- КАТАЛОГ -->
+    <section id="catalog" class="catalog-section">
+      <div class="catalog-section__header">
+        <h2>Каталог товаров</h2>
+        <p>Найдите всё необходимое для работы</p>
+        <div class="catalog-filters" id="catalogFilters">
+          <button class="filter-chip active" data-filter="all">Все</button>
+          <button class="filter-chip" data-filter="welding">Сварка</button>
+          <button class="filter-chip" data-filter="rigging">Такелаж</button>
+          <button class="filter-chip" data-filter="metal">Прокат</button>
+          <button class="filter-chip" data-filter="tools">Инструмент</button>
+          <button class="filter-chip" data-filter="fasteners">Крепёж</button>
+        </div>
       </div>
-    </div>
-    <div class="products-grid" id="productsGrid"></div>
-  </section>
+      <div class="products-grid" id="productsGrid"></div>
+    </section>
 
-  <!-- ПРЕИМУЩЕСТВА -->
-  <section class="features-section" id="features">
-    <div class="features-section__container">
-      <div class="feature-box"><i class="fas fa-truck"></i>
-        <h3>Доставка</h3>
-        <p>По Волгоградской области</p>
+    <!-- ПРЕИМУЩЕСТВА -->
+    <section class="features-section" id="features">
+      <div class="features-section__container">
+        <div class="feature-box"><i class="fas fa-truck"></i>
+          <h3>Доставка</h3>
+          <p>По Волгоградской области</p>
+        </div>
+        <div class="feature-box"><i class="fas fa-file-invoice"></i>
+          <h3>Работаем с НДС</h3>
+          <p>Наличный и безналичный расчет</p>
+        </div>
+        <div class="feature-box"><i class="fas fa-warehouse"></i>
+          <h3>Широкий ассортимент</h3>
+          <p>Более 1000 позиций</p>
+        </div>
+        <div class="feature-box"><i class="fas fa-handshake"></i>
+          <h3>Надёжность</h3>
+          <p>Работаем с 2006 года</p>
+        </div>
       </div>
-      <div class="feature-box"><i class="fas fa-file-invoice"></i>
-        <h3>Работаем с НДС</h3>
-        <p>Наличный и безналичный расчет</p>
-      </div>
-      <div class="feature-box"><i class="fas fa-warehouse"></i>
-        <h3>Широкий ассортимент</h3>
-        <p>Более 1000 позиций</p>
-      </div>
-      <div class="feature-box"><i class="fas fa-handshake"></i>
-        <h3>Надёжность</h3>
-        <p>Работаем с 2006 года</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- БЕГУЩАЯ СТРОКА -->
-  <div class="pattern">
-    <div class="pattern-track">БОЛТЫ ГАЙКИ ШАЙБЫ ШПИЛЬКИ АНКЕРЫ ДЮБЕЛИ ШУРУПЫ ГВОЗДИ ЗАКЛЁПКИ ШТИФТЫ ТРОСЫ ЦЕПИ
-      ПРОВОЛОКА СВАРКА СВАРОЧНЫЕАППАРАТЫ ДРЕЛИ ПЕРФОРАТОРЫ ШУРУПОВЁРТЫ ОТВЁРТКИ КЛЮЧИ МОЛОТКИ ПЛОСКОГУБЦЫ КУСАЧКИ УГОЛКИ
-      ПРОФИЛИ ЛИСТМЕТАЛЛ АРМАТУРА ТРУБЫ КРОНШТЕЙНЫ ФИКСАТОРЫ</div>
-  </div>
-
-  <!-- ФУТЕР МИНИМАЛИСТИЧНЫЙ -->
-  <footer class="shop-footer">
-    <div class="shop-footer__container">
-      <span class="shop-footer__copy">&copy; <span id="currentYear">2024</span> Метиз Электрод</span>
-      <nav class="shop-footer__links">
-        <a href="index.html">Главная</a>
-        <a href="#catalog">Каталог</a>
-        <a href="about.html">О нас</a>
-      </nav>
-      <a href="tel:+79610893812" class="shop-footer__phone">+7 (961) 089-38-12</a>
+    <!-- БЕГУЩАЯ СТРОКА -->
+    <div class="pattern">
+      <div class="pattern-track">БОЛТЫ ГАЙКИ ШАЙБЫ ШПИЛЬКИ АНКЕРЫ ДЮБЕЛИ ШУРУПЫ ГВОЗДИ ЗАКЛЁПКИ ШТИФТЫ ТРОСЫ ЦЕПИ
+        ПРОВОЛОКА СВАРКА СВАРОЧНЫЕАППАРАТЫ ДРЕЛИ ПЕРФОРАТОРЫ ШУРУПОВЁРТЫ ОТВЁРТКИ КЛЮЧИ МОЛОТКИ ПЛОСКОГУБЦЫ КУСАЧКИ
+        УГОЛКИ
+        ПРОФИЛИ ЛИСТМЕТАЛЛ АРМАТУРА ТРУБЫ КРОНШТЕЙНЫ ФИКСАТОРЫ</div>
     </div>
-  </footer>
-<script src="https://api-maps.yandex.ru/2.1/?lang=ru-RU&amp;apikey=33642748-9cc0-49a1-8516-cef1e3433a34" type="text/javascript"></script>
-  <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
-  <script src="js/object_manager.js" type="text/javascript"></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init();</script>
-  <script src="js/app.js"></script>
+
+    <!-- ФУТЕР МИНИМАЛИСТИЧНЫЙ -->
+    <footer class="shop-footer">
+      <div class="shop-footer__container">
+        <span class="shop-footer__copy">&copy; <span id="currentYear">2024</span> Метиз Электрод</span>
+        <nav class="shop-footer__links">
+          <a href="index.html">Главная</a>
+          <a href="#catalog">Каталог</a>
+          <a href="about.html">О нас</a>
+        </nav>
+        <a href="tel:+79610893812" class="shop-footer__phone">+7 (961) 089-38-12</a>
+      </div>
+    </footer>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru-RU&amp;apikey=33642748-9cc0-49a1-8516-cef1e3433a34"
+      type="text/javascript"></script>
+    <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+    <script src="js/object_manager.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
+    <script src="js/app.js"></script>
   </div>
 </body>
 
