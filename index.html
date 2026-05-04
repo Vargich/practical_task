@@ -11,44 +11,97 @@
     integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
   <link rel="shortcut icon" href="image/favicon.ico" type="image/ico" />
   <meta name="description" content="Метизы, сварочное оборудование, инструмент и промышленный прокат" />
+  <script src="js/api.js"></script>
 </head>
 
 <body>
 
-  <!-- Модальное окно -->
-  <div id="authModal"
-    style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;justify-content:center;align-items:center;backdrop-filter:blur(5px);">
-    <div
-      style="background:white;border-radius:20px;padding:2.5rem 2rem;width:420px;max-width:90vw;position:relative;box-shadow:0 25px 50px rgba(0,0,0,0.2);">
-      <button onclick="document.getElementById('authModal').style.display='none'"
-        style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.8rem;cursor:pointer;color:#999;">&times;</button>
-      <div style="display:flex;margin-bottom:1.5rem;">
-        <button id="tabLogin" onclick="switchTab('login')"
-          style="flex:1;padding:0.7rem;background:#FF5733;color:white;border:none;cursor:pointer;font-weight:600;border-radius:10px 0 0 10px;">Войти</button>
-        <button id="tabRegister" onclick="switchTab('register')"
-          style="flex:1;padding:0.7rem;background:#f3f4f6;color:black;border:none;cursor:pointer;font-weight:600;border-radius:0 10px 10px 0;">Регистрация</button>
+
+  <!-- Модальное окно авторизации -->
+<!-- Модальное окно авторизации -->
+<div id="authModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;justify-content:center;align-items:center;backdrop-filter:blur(8px);">
+  <div style="background:white;border-radius:24px;padding:2.5rem 2rem;width:440px;max-width:95vw;position:relative;box-shadow:0 25px 60px rgba(0,0,0,0.3);overflow:hidden;">
+    
+    
+    
+    <button onclick="closeAuthModal()" style="position:absolute;top:16px;right:16px;background:#f3f4f6;border:none;width:32px;height:32px;border-radius:50%;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6b7280;z-index:1;">&times;</button>
+    
+    <!-- Шаг 1: Ввод телефона/email -->
+    <div id="authStep1">
+      <div style="text-align:center;margin-bottom:1.5rem;">
+        <div style="width:56px;height:56px;background:linear-gradient(135deg,#FF5733,#FF8F00);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+          <i class="fas fa-sign-in-alt" style="color:white;font-size:1.3rem;"></i>
+        </div>
+        <h2 style="font-size:1.4rem;font-weight:700;color:#111827;">Вход или регистрация</h2>
+        <p style="color:#6b7280;font-size:0.9rem;margin-top:0.4rem;">Введите номер телефона или email</p>
       </div>
-      <div id="authMessage" style="text-align:center;margin-bottom:1rem;font-size:0.9rem;min-height:1.2rem;"></div>
-      <form id="loginForm" onsubmit="handleLogin(event)" style="display:block;">
-        <div style="margin-bottom:1.2rem;"><input type="email" id="loginEmail" placeholder="Email" required
-            style="width:100%;padding:0.9rem;border:1px solid #ddd;border-radius:10px;"></div>
-        <div style="margin-bottom:1.2rem;"><input type="password" id="loginPassword" placeholder="Пароль" required
-            style="width:100%;padding:0.9rem;border:1px solid #ddd;border-radius:10px;"></div>
-        <button type="submit"
-          style="width:100%;padding:0.9rem;background:#FF5733;color:white;border:none;border-radius:10px;font-weight:bold;cursor:pointer;">Войти</button>
-      </form>
-      <form id="registerForm" onsubmit="handleRegister(event)" style="display:none;">
-        <div style="margin-bottom:1.2rem;"><input type="text" id="regName" placeholder="Имя" required
-            style="width:100%;padding:0.9rem;border:1px solid #ddd;border-radius:10px;"></div>
-        <div style="margin-bottom:1.2rem;"><input type="email" id="regEmail" placeholder="Email" required
-            style="width:100%;padding:0.9rem;border:1px solid #ddd;border-radius:10px;"></div>
-        <div style="margin-bottom:1.2rem;"><input type="password" id="regPassword" placeholder="Пароль" required
-            style="width:100%;padding:0.9rem;border:1px solid #ddd;border-radius:10px;"></div>
-        <button type="submit"
-          style="width:100%;padding:0.9rem;background:#FF5733;color:white;border:none;border-radius:10px;font-weight:bold;cursor:pointer;">Зарегистрироваться</button>
-      </form>
+
+      <div id="authMessage" style="text-align:center;margin-bottom:1rem;font-size:0.85rem;min-height:1.5rem;"></div>
+
+      <div style="margin-bottom:1.2rem;position:relative;">
+        <i id="authInputIcon" class="fas fa-phone-alt" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9ca3af;"></i>
+       <input type="text" id="authContact" placeholder="+7 (___) ___-__-__ или email@example.com" 
+  style="width:100%;padding:0.9rem 1rem 0.9rem 2.5rem;border:2px solid #e5e7eb;border-radius:12px;font-size:0.95rem;outline:none;font-family:inherit;transition:0.3s;" 
+  onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" />
+      </div>
+
+      <button onclick="sendCode()" style="width:100%;padding:1rem;background:linear-gradient(135deg,#FF5733,#FF8F00);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:0.3s;box-shadow:0 4px 15px rgba(255,87,51,0.3);">Получить код</button>
+
+      <p style="text-align:center;margin-top:1rem;font-size:0.75rem;color:#9ca3af;">Нажимая «Получить код», вы соглашаетесь с условиями обработки персональных данных</p>
     </div>
+
+    <!-- Шаг 2: Ввод кода -->
+    <div id="authStep2" style="display:none;">
+      <div style="text-align:center;margin-bottom:1.5rem;">
+        <div style="width:56px;height:56px;background:linear-gradient(135deg,#FF5733,#FF8F00);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+          <i class="fas fa-lock" style="color:white;font-size:1.3rem;"></i>
+        </div>
+        <h2 style="font-size:1.4rem;font-weight:700;color:#111827;">Код подтверждения</h2>
+        <p style="color:#6b7280;font-size:0.9rem;margin-top:0.4rem;">Отправлен на <strong id="codeDestination"></strong></p>
+      </div>
+
+      <div id="authMessage2" style="text-align:center;margin-bottom:1rem;font-size:0.85rem;min-height:1.5rem;"></div>
+
+      <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1.5rem;" id="codeInputs">
+        <input type="text" maxlength="1" class="code-input" style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" oninput="moveCodeInput(this)" />
+        <input type="text" maxlength="1" class="code-input" style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" oninput="moveCodeInput(this)" />
+        <input type="text" maxlength="1" class="code-input" style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" oninput="moveCodeInput(this)" />
+        <input type="text" maxlength="1" class="code-input" style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" oninput="moveCodeInput(this)" />
+        <input type="text" maxlength="1" class="code-input" style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" oninput="checkCodeComplete(this)" />
+      </div>
+
+      <button onclick="verifyCode()" style="width:100%;padding:1rem;background:linear-gradient(135deg,#FF5733,#FF8F00);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:0.3s;box-shadow:0 4px 15px rgba(255,87,51,0.3);">Подтвердить</button>
+
+      <div style="text-align:center;margin-top:1rem;">
+        <button onclick="sendCode()" style="background:none;border:none;color:#FF5733;cursor:pointer;font-size:0.9rem;font-weight:500;">Отправить код повторно</button>
+      </div>
+      <div style="text-align:center;margin-top:0.5rem;">
+        <button onclick="goToStep1()" style="background:none;border:none;color:#6b7280;cursor:pointer;font-size:0.9rem;">← Назад</button>
+      </div>
+    </div>
+
+    <!-- Шаг 3: Регистрация -->
+    <div id="authStep3" style="display:none;">
+      <div style="text-align:center;margin-bottom:1.5rem;">
+        <div style="width:56px;height:56px;background:linear-gradient(135deg,#FF5733,#FF8F00);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+          <i class="fas fa-user-plus" style="color:white;font-size:1.3rem;"></i>
+        </div>
+        <h2 style="font-size:1.4rem;font-weight:700;color:#111827;">Завершите регистрацию</h2>
+        <p style="color:#6b7280;font-size:0.9rem;margin-top:0.4rem;">Укажите ваше имя</p>
+      </div>
+
+      <div id="authMessage3" style="text-align:center;margin-bottom:1rem;font-size:0.85rem;min-height:1.5rem;"></div>
+
+      <div style="margin-bottom:1.2rem;position:relative;">
+        <i class="fas fa-user" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9ca3af;"></i>
+        <input type="text" id="regName" placeholder="Ваше имя" style="width:100%;padding:0.9rem 1rem 0.9rem 2.5rem;border:2px solid #e5e7eb;border-radius:12px;font-size:0.95rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" />
+      </div>
+
+      <button onclick="completeRegistration()" style="width:100%;padding:1rem;background:linear-gradient(135deg,#FF5733,#FF8F00);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:0.3s;box-shadow:0 4px 15px rgba(255,87,51,0.3);">Завершить</button>
+    </div>
+
   </div>
+</div>
 
   <!-- ШАПКА -->
   <header class="shop-header">
@@ -102,14 +155,12 @@
         <p>Найдите всё необходимое для работы</p>
         <div class="catalog-filters" id="catalogFilters">
           <button class="filter-chip active" data-filter="all">Все</button>
-          <button class="filter-chip" data-filter="welding">Сварка</button>
-          <button class="filter-chip" data-filter="rigging">Такелаж</button>
-          <button class="filter-chip" data-filter="metal">Прокат</button>
-          <button class="filter-chip" data-filter="tools">Инструмент</button>
-          <button class="filter-chip" data-filter="fasteners">Крепёж</button>
+          <!-- Категории загрузятся с сервера -->
         </div>
       </div>
+      <div class="catalog-toolbar" id="catalogToolbar"></div>
       <div class="products-grid" id="productsGrid"></div>
+      <div id="paginationContainer"></div>
     </section>
 
     <!-- ПРЕИМУЩЕСТВА -->
@@ -162,6 +213,26 @@
     <script>AOS.init();</script>
     <script src="js/app.js"></script>
   </div>
+   <!-- Корзина -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-sidebar__header">
+      <h3>Корзина</h3>
+      <button class="cart-sidebar__close" onclick="closeCart()">&times;</button>
+    </div>
+    <div class="cart-sidebar__items" id="cartItems"></div>
+    <div class="cart-sidebar__footer">
+      <div class="cart-total">Итого: <span id="cartTotal">0 ₽</span></div>
+      <button class="cart-checkout-btn" onclick="checkout()">Оформить заказ</button>
+    </div>
+  </div>
+
+  <script src="https://api-maps.yandex.ru/2.1/?lang=ru-RU&amp;apikey=33642748-9cc0-49a1-8516-cef1e3433a34"></script>
+  <script src="https://yandex.st/jquery/2.2.3/jquery.min.js"></script>
+  <script src="js/object_manager.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
+  <script src="js/app.js"></script>
 </body>
 
 </html>
