@@ -51,17 +51,17 @@ async function initDatabase() {
   `);
 
   db.run(`
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      email TEXT NOT NULL UNIQUE,
-      password TEXT NOT NULL,
-      phone TEXT,
-      address TEXT,
-      is_admin INTEGER DEFAULT 0,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-  `);
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT,
+    phone TEXT,
+    password TEXT NOT NULL DEFAULT 'phone_auth',
+    address TEXT,
+    is_admin INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
 
   db.run(`
     CREATE TABLE IF NOT EXISTS orders (
@@ -271,16 +271,33 @@ app.put('/api/profile/:id', (req, res) => {
   const user = queryOne('SELECT id, name, email, phone, address FROM users WHERE id = ?', [req.params.id]);
   res.json({ success: true, user });
 });
-
 app.post('/api/orders', (req, res) => {
   const { userId, items, total } = req.body;
-  run('INSERT INTO orders (user_id, total, status) VALUES (?, ?, ?)', [userId, total, 'processing']);
   
-  const orderId = queryOne('SELECT last_insert_rowid() as id').id;
-  items.forEach(item => {
-    run('INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)', 
-      [orderId, item.id, item.quantity, item.price]);
-  });
+  // Вставляем заказ
+  db.run('INSERT INTO orders (user_id, total, status) VALUES (?, ?, ?)', [userId, total, 'processing']);
+  
+  // Получаем ID заказа по-другому
+  const result = db.exec('SELECT MAX(id) as id FROM orders');
+  const orderId = result[0].values[0][0];
+  
+  console.log('Создан заказ #' + orderId, 'товаров:', items ? items.length : 0);
+  
+  // Сохраняем товары
+  if (items && items.length > 0) {
+    items.forEach(item => {
+      console.log('  Добавляю товар:', item.id, '×' + item.quantity, 'по', item.price);
+      db.run(
+        'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)',
+        [orderId, item.id, item.quantity, item.price]
+      );
+    });
+    saveDatabase();
+  }
+  
+  // Проверяем, сохранились ли товары
+  const checkItems = db.exec('SELECT COUNT(*) as c FROM order_items WHERE order_id = ' + orderId);
+  console.log('Товаров в заказе после сохранения:', checkItems[0].values[0][0]);
   
   res.json({ success: true, orderId });
 });
@@ -289,7 +306,7 @@ app.get('/api/orders/:userId', (req, res) => {
   const orders = queryAll('SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC', [req.params.userId]);
   const result = orders.map(order => {
     const items = queryAll(
-      'SELECT oi.*, p.name, p.image FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?',
+      'SELECT order_items.*, products.name, products.image FROM order_items JOIN products ON order_items.product_id = products.id WHERE order_items.order_id = ?',
       [order.id]
     );
     return { ...order, items };
@@ -375,10 +392,16 @@ app.get('/api/admin/users', (req, res) => {
 });
 
 app.get('/api/admin/orders', (req, res) => {
-  const orders = queryAll('SELECT o.*, u.name as user_name FROM orders o LEFT JOIN users u ON o.user_id = u.id ORDER BY o.created_at DESC');
-  res.json(orders);
+  const orders = queryAll('SELECT o.*, u.name as user_name, u.phone as user_phone FROM orders o LEFT JOIN users u ON o.user_id = u.id ORDER BY o.created_at DESC');
+  const result = orders.map(order => {
+    const items = queryAll(
+      'SELECT oi.*, p.name, p.image FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?',
+      [order.id]
+    );
+    return { ...order, items };
+  });
+  res.json(result);
 });
-
 app.put('/api/admin/orders/:id', (req, res) => {
   run('UPDATE orders SET status=? WHERE id=?', [req.body.status, req.params.id]);
   res.json({ success: true });
