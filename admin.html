@@ -7,6 +7,7 @@
     <title>Админ-панель — Метиз Электрод</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
         integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -15,51 +16,156 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f3f4f6;
-            color: #111827;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            color: #1a1a2e;
+        }
+
+        .login-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .login-box {
+            background: #fff;
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            width: 400px;
+            max-width: 90vw;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-box h1 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .login-box p {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .login-box input:focus {
+            border-color: #FF5733;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, #FF5733, #FF8F00);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .login-box button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 87, 51, 0.3);
+        }
+
+        .login-error {
+            color: #ef4444;
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            display: none;
         }
 
         .admin-header {
-            background: #111827;
-            color: #fff;
+            background: #fff;
+            color: #1a1a2e;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
 
         .admin-header h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .admin-header h1 i {
+            color: #FF5733;
             font-size: 1.3rem;
         }
 
         .admin-header a {
-            color: #FF5733;
+            color: #6b7280;
             text-decoration: none;
+            font-weight: 500;
+            margin-left: 1.5rem;
+            transition: 0.3s;
+        }
+
+        .admin-header a:hover {
+            color: #FF5733;
         }
 
         .admin-tabs {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.3rem;
             padding: 1rem 2rem;
             background: #fff;
             border-bottom: 1px solid #e5e7eb;
         }
 
         .admin-tab {
-            padding: 0.6rem 1.2rem;
+            padding: 0.7rem 1.5rem;
             border: none;
-            background: #f3f4f6;
-            border-radius: 8px;
+            background: transparent;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: 500;
             transition: 0.3s;
+            color: #6b7280;
+            font-family: inherit;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .admin-tab:hover,
+        .admin-tab:hover {
+            background: #f3f4f6;
+            color: #1a1a2e;
+        }
+
         .admin-tab.active {
             background: #FF5733;
             color: #fff;
+            box-shadow: 0 4px 12px rgba(255, 87, 51, 0.2);
         }
 
         .admin-content {
@@ -70,72 +176,137 @@
 
         .admin-panel {
             display: none;
+            animation: fadeIn 0.3s ease;
         }
 
         .admin-panel.active {
             display: block;
         }
 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .table-wrapper {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.04);
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         th,
         td {
-            padding: 0.8rem 1rem;
+            padding: 0.9rem 1.2rem;
             text-align: left;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid #f3f4f6;
             font-size: 0.9rem;
         }
 
         th {
-            background: #f9fafb;
+            background: #fafbfc;
             font-weight: 600;
+            color: #4b5563;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        tr:hover {
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: #f9fafb;
+        }
+
+        td img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 8px;
             background: #f9fafb;
         }
 
         .btn {
-            padding: 0.5rem 1rem;
+            padding: 0.55rem 1.1rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
             font-size: 0.85rem;
-            margin-right: 0.3rem;
+            transition: 0.3s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
         }
 
         .btn-edit {
+            background: #fff3e0;
+            color: #FF5733;
+        }
+
+        .btn-edit:hover {
             background: #FF5733;
             color: #fff;
         }
 
         .btn-delete {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+
+        .btn-delete:hover {
             background: #ef4444;
             color: #fff;
         }
 
         .btn-add {
-            background: #10b981;
+            background: linear-gradient(135deg, #10b981, #059669);
             color: #fff;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-add:hover {
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
         }
 
         .btn-save {
-            background: #3b82f6;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: #fff;
+            border-radius: 10px;
+            padding: 0.7rem 1.5rem;
+            font-weight: 600;
         }
 
         .btn-cancel {
-            background: #6b7280;
-            color: #fff;
+            background: #f3f4f6;
+            color: #6b7280;
+            border-radius: 10px;
+            padding: 0.7rem 1.5rem;
+            font-weight: 500;
+        }
+
+        .btn-cancel:hover {
+            background: #e5e7eb;
         }
 
         .modal-overlay {
@@ -146,6 +317,7 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(4px);
         }
 
         .modal-overlay.open {
@@ -154,67 +326,140 @@
 
         .modal {
             background: #fff;
-            border-radius: 14px;
-            padding: 2rem;
-            width: 500px;
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 520px;
             max-width: 90vw;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .modal h2 {
-            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.8rem;
+            color: #1a1a2e;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.3rem;
-            font-weight: 500;
-            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            color: #374151;
         }
 
         .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group select {
             width: 100%;
-            padding: 0.6rem 0.8rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
             font-size: 0.9rem;
+            transition: 0.3s;
+            outline: none;
+            font-family: inherit;
+            background: #fafbfc;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #FF5733;
+            background: #fff;
+        }
+
+        .form-group input[type="file"] {
+            padding: 0.5rem;
+            border-style: dashed;
+            cursor: pointer;
         }
 
         .form-actions {
             display: flex;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
+            gap: 0.8rem;
+            margin-top: 2rem;
         }
 
-        .error-message {
-            background: #fee2e2;
-            color: #991b1b;
-            padding: 1rem;
-            border-radius: 8px;
+        #imagePreview img {
+            max-width: 120px;
+            max-height: 120px;
+            border-radius: 10px;
+            margin-top: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .slug-toggle {
+            background: none;
+            border: none;
+            color: #FF5733;
+            cursor: pointer;
+            font-size: 0.85rem;
             margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .slug-toggle:hover {
+            text-decoration: underline;
+        }
+
+        .badge {
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-hit {
+            background: #fff3e0;
+            color: #e67e00;
+        }
+
+        .badge-new {
+            background: #d1fae5;
+            color: #059669;
         }
 
         @media (max-width: 768px) {
             .admin-tabs {
                 flex-wrap: wrap;
+                padding: 0.8rem 1rem;
+            }
+
+            .admin-tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .admin-content {
                 padding: 1rem;
             }
 
-            table {
-                font-size: 0.8rem;
+            .modal {
+                padding: 1.5rem;
             }
 
             th,
             td {
-                padding: 0.5rem;
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -222,161 +467,205 @@
 
 <body>
 
-    <header class="admin-header">
-        <h1><i class="fas fa-cog"></i> Админ-панель Метиз Электрод</h1>
-        <a href="index.html"><i class="fas fa-arrow-left"></i> На сайт</a>
-    </header>
-
-    <div class="admin-tabs">
-        <button class="admin-tab active" data-panel="products">Товары</button>
-        <button class="admin-tab" data-panel="categories">Категории</button>
-        <button class="admin-tab" data-panel="users">Пользователи</button>
-        <button class="admin-tab" data-panel="orders">Заказы</button>
-    </div>
-
-    <div class="admin-content">
-        <!-- Товары -->
-        <div class="admin-panel active" id="panel-products">
-            <button class="btn btn-add" onclick="openProductModal()"><i class="fas fa-plus"></i> Добавить товар</button>
-            <div id="productsError"></div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Название</th>
-                        <th>Цена</th>
-                        <th>Категория</th>
-                        <th>Рейтинг</th>
-                        <th>На складе</th>
-                        <th>Действия</th>
-                    </tr>
-                </thead>
-                <tbody id="productsTable">
-                    <tr>
-                        <td colspan="7" style="text-align:center;padding:2rem;">Загрузка...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Категории -->
-        <div class="admin-panel" id="panel-categories">
-            <button class="btn btn-add" onclick="openCategoryModal()"><i class="fas fa-plus"></i> Добавить
-                категорию</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Название</th>
-                        <th>Slug</th>
-                        <th>Действия</th>
-                    </tr>
-                </thead>
-                <tbody id="categoriesTable">
-                    <tr>
-                        <td colspan="4" style="text-align:center;padding:2rem;">Загрузка...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Пользователи -->
-        <div class="admin-panel" id="panel-users">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Имя</th>
-                        <th>Email</th>
-                        <th>Телефон</th>
-                        <th>Дата регистрации</th>
-                    </tr>
-                </thead>
-                <tbody id="usersTable">
-                    <tr>
-                        <td colspan="5" style="text-align:center;padding:2rem;">Загрузка...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Заказы -->
-        <div class="admin-panel" id="panel-orders">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Пользователь</th>
-                        <th>Телефон</th>
-                        <th>Состав</th>
-                        <th>Сумма</th>
-                        <th>Статус</th>
-                        <th>Дата</th>
-                        <th>Действия</th>
-                    </tr>
-                </thead>
-                <tbody id="ordersTable">
-                    <tr>
-                        <td colspan="8" style="text-align:center;padding:2rem;">Загрузка...</td>
-                    </tr>
-                </tbody>
-            </table>
+    <!-- Форма входа -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <h1>🔐 Админ-панель</h1>
+            <p>Метиз Электрод</p>
+            <input type="text" id="adminLogin" placeholder="Email или телефон"
+                onkeydown="if(event.key==='Enter')document.getElementById('adminPassword').focus()" />
+            <input type="password" id="adminPassword" placeholder="Пароль" onkeydown="if(event.key==='Enter')login()" />
+            <button onclick="login()">Войти</button>
+            <div class="login-error" id="loginError">Неверный логин или пароль</div>
         </div>
     </div>
 
-    <!-- Модальное окно для товара -->
+    <!-- Админка -->
+    <div id="adminApp" style="display:none;">
+        <header class="admin-header">
+            <h1><i class="fas fa-cog"></i> Админ-панель</h1>
+            <div>
+                <a href="index.html"><i class="fas fa-external-link-alt"></i> На сайт</a>
+                <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+            </div>
+        </header>
+        <div class="admin-tabs">
+            <button class="admin-tab active" data-panel="products"><i class="fas fa-box"></i> Товары</button>
+            <button class="admin-tab" data-panel="categories"><i class="fas fa-tags"></i> Категории</button>
+            <button class="admin-tab" data-panel="users"><i class="fas fa-users"></i> Пользователи</button>
+            <button class="admin-tab" data-panel="orders"><i class="fas fa-shopping-cart"></i> Заказы</button>
+        </div>
+        <div class="admin-content">
+            <!-- Товары -->
+            <div class="admin-panel active" id="panel-products">
+                <button class="btn btn-add" onclick="openProductModal()"><i class="fas fa-plus"></i> Добавить
+                    товар</button>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Фото</th>
+                                <th>Название</th>
+                                <th>Артикул</th>
+                                <th>Цена</th>
+                                <th>Категория</th>
+                                <th>Бейдж</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Категории -->
+            <div class="admin-panel" id="panel-categories">
+                <button class="btn btn-add" onclick="openCategoryModal()"><i class="fas fa-plus"></i> Добавить</button>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Название</th>
+                                <th>Slug</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoriesTable"></tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Пользователи -->
+            <div class="admin-panel" id="panel-users">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Имя</th>
+                                <th>Email</th>
+                                <th>Телефон</th>
+                                <th>Дата</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable"></tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Заказы -->
+            <div class="admin-panel" id="panel-orders">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Пользователь</th>
+                                <th>Телефон</th>
+                                <th>Состав</th>
+                                <th>Сумма</th>
+                                <th>Статус</th>
+                                <th>Дата</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модалка товара -->
     <div class="modal-overlay" id="productModal">
         <div class="modal">
             <h2 id="productModalTitle">Добавить товар</h2>
-            <form id="productForm">
-                <input type="hidden" id="productId" />
+            <form id="productForm"><input type="hidden" id="productId" />
                 <div class="form-group"><label>Название</label><input type="text" id="prodName" required /></div>
-                <div class="form-group"><label>Цена</label><input type="number" id="prodPrice" required /></div>
-                <div class="form-group"><label>Старая цена</label><input type="number" id="prodOldPrice" /></div>
-                <div class="form-group"><label>Категория</label><select id="prodCategory" required></select></div>
-                <div class="form-group"><label>Изображение (путь)</label><input type="text" id="prodImage"
-                        placeholder="image/photo.png" /></div>
-                <div class="form-group"><label>Рейтинг</label><input type="number" id="prodRating" step="0.1" min="0"
-                        max="5" value="4.5" /></div>
-                <div class="form-group"><label>Отзывы</label><input type="number" id="prodReviews" value="0" /></div>
-                <div class="form-group"><label>Бейдж</label><select id="prodBadge">
-                        <option value="">Нет</option>
-                        <option value="hit">Хит</option>
-                        <option value="new">Новинка</option>
-                    </select></div>
-                <div class="form-group"><label>В наличии</label><select id="prodStock">
-                        <option value="1">Да</option>
-                        <option value="0">Нет</option>
-                    </select></div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-save">Сохранить</button>
-                    <button type="button" class="btn btn-cancel" onclick="closeProductModal()">Отмена</button>
+                <div class="form-group"><label>Артикул</label><input type="text" id="prodArticle" /></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                    <div class="form-group"><label>Цена</label><input type="number" id="prodPrice" required /></div>
                 </div>
+                <div class="form-group"><label>Категория</label><select id="prodCategory" required></select></div>
+                <div class="form-group"><label>Изображение</label><input type="file" id="prodImageFile" accept="image/*"
+                        onchange="uploadImage()" /><input type="hidden" id="prodImage" />
+                    <div id="imagePreview"></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                    <div class="form-group"><label>Бейдж</label><select id="prodBadge">
+                            <option value="">Нет</option>
+                            <option value="hit">Хит</option>
+                            <option value="new">Новинка</option>
+                        </select></div>
+                    <div class="form-group"><label>Наличие</label><select id="prodStock">
+                            <option value="1" selected>В наличии</option>
+                            <option value="0">Под заказ</option>
+                        </select></div>
+                </div>
+                <div class="form-actions"><button type="submit" class="btn btn-save">Сохранить</button><button
+                        type="button" class="btn btn-cancel" onclick="closeProductModal()">Отмена</button></div>
             </form>
         </div>
     </div>
 
-    <!-- Модальное окно для категории -->
+    <!-- Модалка категории -->
     <div class="modal-overlay" id="categoryModal">
         <div class="modal">
             <h2 id="categoryModalTitle">Добавить категорию</h2>
-            <form id="categoryForm">
-                <input type="hidden" id="categoryId" />
+            <form id="categoryForm"><input type="hidden" id="categoryId" />
                 <div class="form-group"><label>Название</label><input type="text" id="catName" required /></div>
-                <div class="form-group"><label>Slug (на английском)</label><input type="text" id="catSlug" required />
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-save">Сохранить</button>
-                    <button type="button" class="btn btn-cancel" onclick="closeCategoryModal()">Отмена</button>
-                </div>
+                <div class="form-group" id="slugGroup" style="display:none;"><label>Slug</label><input type="text"
+                        id="catSlug" /></div>
+                <button type="button" class="slug-toggle"
+                    onclick="const g=document.getElementById('slugGroup');g.style.display=g.style.display==='none'?'block':'none'">✎
+                    Изменить slug</button>
+                <div class="form-actions"><button type="submit" class="btn btn-save">Сохранить</button><button
+                        type="button" class="btn btn-cancel" onclick="closeCategoryModal()">Отмена</button></div>
             </form>
         </div>
     </div>
 
     <script>
-        const API_BASE = window.location.origin + '/api/admin';
+        let authToken = '';
+        const API_BASE = '/api/admin';
+        let categoriesMap = {};
 
-        // ===== Навигация по вкладкам =====
+        function translit(text) {
+            const map = { 'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e', 'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'sch', 'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya', ' ': '-', '_': '-' };
+            return text.toLowerCase().split('').map(c => map[c] || c).join('').replace(/[^a-z0-9\-]/g, '').replace(/\-+/g, '-').replace(/^\-|\-$/g, '');
+        }
+
+        function login() {
+            const l = document.getElementById('adminLogin').value.trim();
+            const p = document.getElementById('adminPassword').value;
+            if (!l || !p) return;
+            authToken = btoa(l + ':' + p);
+            fetch(API_BASE + '/products', { headers: { 'Authorization': 'Basic ' + authToken } })
+                .then(r => { if (r.ok) { localStorage.setItem('adminToken', authToken); document.getElementById('loginOverlay').style.display = 'none'; document.getElementById('adminApp').style.display = 'block'; loadAll(); } else document.getElementById('loginError').style.display = 'block'; });
+        }
+
+        function logout() { localStorage.removeItem('adminToken'); location.reload(); }
+
+        (function () {
+            const t = localStorage.getItem('adminToken');
+            if (t) { authToken = t; fetch(API_BASE + '/products', { headers: { 'Authorization': 'Basic ' + authToken } }).then(r => { if (r.ok) { document.getElementById('loginOverlay').style.display = 'none'; document.getElementById('adminApp').style.display = 'block'; loadAll(); } }); }
+        })();
+
+        // Загружаем категории в память
+        function loadCategoriesMap() {
+            return fetch('/api/categories').then(r => r.json()).then(cats => {
+                categoriesMap = {};
+                cats.forEach(c => { categoriesMap[c.id] = c.name; });
+            });
+        }
+
+        function loadAll() {
+            loadCategoriesMap().then(() => {
+                loadProducts();
+                loadCategories();
+                loadUsers();
+                loadOrders();
+            });
+        }
+
         document.querySelectorAll('.admin-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -384,135 +673,94 @@
                 tab.classList.add('active');
                 document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
                 if (tab.dataset.panel === 'products') loadProducts();
-                if (tab.dataset.panel === 'categories') loadCategories();
-                if (tab.dataset.panel === 'users') loadUsers();
-                if (tab.dataset.panel === 'orders') loadOrders();
+                else if (tab.dataset.panel === 'categories') loadCategories();
+                else if (tab.dataset.panel === 'users') loadUsers();
+                else if (tab.dataset.panel === 'orders') loadOrders();
             });
         });
 
-        // ===== ТОВАРЫ =====
+        // Товары
         function loadProducts() {
-            fetch(`${API_BASE}/products`)
-                .then(r => r.json())
-                .then(products => {
-                    if (!Array.isArray(products)) throw new Error('Неверный формат данных');
-                    document.getElementById('productsTable').innerHTML = products.length === 0
-                        ? '<tr><td colspan="7" style="text-align:center;padding:2rem;color:#9ca3af;">Нет товаров</td></tr>'
-                        : products.map(p => `
-              <tr>
-                <td>${p.id}</td>
-                <td>${p.name}</td>
-                <td>${Number(p.price).toLocaleString()} ₽</td>
-                <td>${p.category_id || '—'}</td>
-                <td>${p.rating} (${p.reviews})</td>
-                <td>${p.in_stock ? '✅' : '❌'}</td>
-                <td>
-                  <button class="btn btn-edit" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button>
-                  <button class="btn btn-delete" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button>
-                </td>
-              </tr>`).join('');
-                })
-                .catch(err => {
-                    console.error('Ошибка загрузки товаров:', err);
-                    document.getElementById('productsTable').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:#ef4444;">Ошибка загрузки. Проверьте, запущен ли сервер.</td></tr>';
-                });
+            fetch(API_BASE + '/products', { headers: { 'Authorization': 'Basic ' + authToken } }).then(r => r.json()).then(products => {
+                document.getElementById('productsTable').innerHTML = products.map(p => `
+                    <tr>
+                        <td>${p.id}</td>
+                        <td><img src="${p.image || 'image/no-photo.png'}" /></td>
+                        <td>${p.name}</td>
+                        <td>${p.article || '—'}</td>
+                        <td>${Number(p.price).toLocaleString()} ₽</td>
+                        <td>${categoriesMap[p.category_id] || '—'}</td>
+                        <td>${p.badge === 'hit' ? '<span class="badge badge-hit">🔥 Хит</span>' : p.badge === 'new' ? '<span class="badge badge-new">✨ Новинка</span>' : '—'}</td>
+                        <td>
+                            <button class="btn btn-edit" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-delete" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`).join('');
+            });
         }
 
         function openProductModal(product = null) {
             document.getElementById('productModal').classList.add('open');
             document.getElementById('productModalTitle').textContent = product ? 'Редактировать товар' : 'Добавить товар';
-            document.getElementById('productId').value = product?.id || '';
-            document.getElementById('prodName').value = product?.name || '';
-            document.getElementById('prodPrice').value = product?.price || '';
-            document.getElementById('prodOldPrice').value = product?.old_price || '';
-            document.getElementById('prodImage').value = product?.image || '';
-            document.getElementById('prodRating').value = product?.rating || 4.5;
-            document.getElementById('prodReviews').value = product?.reviews || 0;
-            document.getElementById('prodBadge').value = product?.badge || '';
-            document.getElementById('prodStock').value = product?.in_stock ?? 1;
 
-            // Загружаем категории в select
-            fetch('/api/categories')
-                .then(r => r.json())
-                .then(cats => {
-                    const select = document.getElementById('prodCategory');
-                    select.innerHTML = cats.map(c => `<option value="${c.id}" ${c.id === (product?.category_id || 1) ? 'selected' : ''}>${c.name}</option>`).join('');
-                })
-                .catch(() => {
-                    document.getElementById('prodCategory').innerHTML = '<option value="1">Сварка</option>';
-                });
+            // Очищаем все поля
+            ['productId', 'prodName', 'prodArticle', 'prodPrice', 'prodImage', 'prodBadge'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+
+            // В наличии — всегда "Да" по умолчанию
+            const stockEl = document.getElementById('prodStock');
+            if (stockEl) stockEl.value = '1';
+
+            if (product) {
+                document.getElementById('productId').value = product.id;
+                document.getElementById('prodName').value = product.name || '';
+                document.getElementById('prodArticle').value = product.article || '';
+                document.getElementById('prodPrice').value = product.price || '';
+                document.getElementById('prodImage').value = product.image || '';
+                document.getElementById('prodBadge').value = product.badge || '';
+                document.getElementById('prodStock').value = product.in_stock ?? 1;
+                document.getElementById('imagePreview').innerHTML = product.image ? `<img src="${product.image}" />` : '';
+            } else {
+                document.getElementById('imagePreview').innerHTML = '';
+            }
+
+            document.getElementById('prodImageFile').value = '';
+            const sel = document.getElementById('prodCategory');
+            sel.innerHTML = '<option value="">Загрузка...</option>';
+            fetch('/api/categories').then(r => r.json()).then(cats => {
+                sel.innerHTML = cats.length === 0 ? '<option value="">Нет категорий</option>' : cats.map(c => `<option value="${c.id}" ${c.id === (product?.category_id || cats[0]?.id) ? 'selected' : ''}>${c.name}</option>`).join('');
+            }).catch(() => { sel.innerHTML = '<option value="">Ошибка</option>'; });
         }
 
-        function closeProductModal() {
-            document.getElementById('productModal').classList.remove('open');
-        }
+        function closeProductModal() { document.getElementById('productModal').classList.remove('open'); }
+        function editProduct(id) { fetch(API_BASE + '/products/' + id, { headers: { 'Authorization': 'Basic ' + authToken } }).then(r => r.json()).then(p => openProductModal(p)); }
+        function deleteProduct(id) { if (confirm('Удалить товар?')) fetch(API_BASE + '/products/' + id, { method: 'DELETE', headers: { 'Authorization': 'Basic ' + authToken } }).then(() => { loadCategoriesMap().then(loadProducts); }); }
 
-        function editProduct(id) {
-            fetch(`${API_BASE}/products/${id}`)
-                .then(r => r.json())
-                .then(p => openProductModal(p))
-                .catch(err => alert('Ошибка загрузки товара'));
-        }
-
-        function deleteProduct(id) {
-            if (!confirm('Удалить товар?')) return;
-            fetch(`${API_BASE}/products/${id}`, { method: 'DELETE' })
-                .then(() => loadProducts())
-                .catch(err => alert('Ошибка удаления'));
+        function uploadImage() {
+            const file = document.getElementById('prodImageFile').files[0];
+            if (!file) return;
+            const fd = new FormData(); fd.append('image', file);
+            fetch('/api/admin/upload', { method: 'POST', headers: { 'Authorization': 'Basic ' + authToken }, body: fd }).then(r => r.json()).then(data => {
+                if (data.success) { document.getElementById('prodImage').value = data.path; document.getElementById('imagePreview').innerHTML = `<img src="${data.path}" />`; }
+            });
         }
 
         document.getElementById('productForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const id = document.getElementById('productId').value;
-            const data = {
-                name: document.getElementById('prodName').value,
-                price: document.getElementById('prodPrice').value,
-                old_price: document.getElementById('prodOldPrice').value || null,
-                category_id: document.getElementById('prodCategory').value,
-                image: document.getElementById('prodImage').value || 'image/no-photo.png',
-                rating: document.getElementById('prodRating').value,
-                reviews: document.getElementById('prodReviews').value,
-                badge: document.getElementById('prodBadge').value || null,
-                in_stock: document.getElementById('prodStock').value
-            };
-
-            const method = id ? 'PUT' : 'POST';
-            const url = id ? `${API_BASE}/products/${id}` : `${API_BASE}/products`;
-
-            fetch(url, {
-                method,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-                .then(r => r.json())
-                .then(() => {
-                    closeProductModal();
-                    loadProducts();
-                })
-                .catch(err => alert('Ошибка сохранения'));
+            const data = { name: document.getElementById('prodName').value, article: document.getElementById('prodArticle').value || '', price: document.getElementById('prodPrice').value, category_id: document.getElementById('prodCategory').value, image: document.getElementById('prodImage').value || 'image/no-photo.png', badge: document.getElementById('prodBadge').value || null, in_stock: document.getElementById('prodStock').value };
+            fetch(id ? API_BASE + '/products/' + id : API_BASE + '/products', { method: id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + authToken }, body: JSON.stringify(data) }).then(() => { closeProductModal(); loadCategoriesMap().then(loadProducts); });
         });
 
-        // ===== КАТЕГОРИИ =====
+        document.getElementById('prodName').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('productForm').requestSubmit(); } });
+
+        // Категории
         function loadCategories() {
-            fetch('/api/categories')
-                .then(r => r.json())
-                .then(cats => {
-                    document.getElementById('categoriesTable').innerHTML = cats.length === 0
-                        ? '<tr><td colspan="4" style="text-align:center;padding:2rem;color:#9ca3af;">Нет категорий</td></tr>'
-                        : cats.map(c => `
-              <tr>
-                <td>${c.id}</td>
-                <td>${c.name}</td>
-                <td>${c.slug}</td>
-                <td>
-                  <button class="btn btn-edit" onclick="editCategory(${c.id})"><i class="fas fa-edit"></i></button>
-                  <button class="btn btn-delete" onclick="deleteCategory(${c.id})"><i class="fas fa-trash"></i></button>
-                </td>
-              </tr>`).join('');
-                })
-                .catch(() => {
-                    document.getElementById('categoriesTable').innerHTML = '<tr><td colspan="4" style="text-align:center;padding:2rem;color:#ef4444;">Ошибка загрузки</td></tr>';
-                });
+            fetch('/api/categories').then(r => r.json()).then(cats => {
+                document.getElementById('categoriesTable').innerHTML = cats.map(c => `<tr><td>${c.id}</td><td>${c.name}</td><td>${c.slug}</td><td><button class="btn btn-delete" onclick="deleteCategory(${c.id})">Удалить</button></td></tr>`).join('');
+            });
         }
 
         function openCategoryModal(cat = null) {
@@ -521,112 +769,47 @@
             document.getElementById('categoryId').value = cat?.id || '';
             document.getElementById('catName').value = cat?.name || '';
             document.getElementById('catSlug').value = cat?.slug || '';
+            document.getElementById('slugGroup').style.display = 'none';
         }
 
-        function closeCategoryModal() {
-            document.getElementById('categoryModal').classList.remove('open');
-        }
-
-        function editCategory(id) {
-            fetch('/api/categories')
-                .then(r => r.json())
-                .then(cats => {
-                    const cat = cats.find(c => c.id === id);
-                    if (cat) openCategoryModal(cat);
-                });
-        }
-
-        function deleteCategory(id) {
-            if (!confirm('Удалить категорию?')) return;
-            fetch(`${API_BASE}/categories/${id}`, { method: 'DELETE' })
-                .then(() => loadCategories())
-                .catch(err => alert('Ошибка удаления'));
-        }
+        function closeCategoryModal() { document.getElementById('categoryModal').classList.remove('open'); }
+        function deleteCategory(id) { if (confirm('Удалить категорию?')) fetch(API_BASE + '/categories/' + id, { method: 'DELETE', headers: { 'Authorization': 'Basic ' + authToken } }).then(() => { loadCategoriesMap().then(loadCategories); }); }
 
         document.getElementById('categoryForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const id = document.getElementById('categoryId').value;
-            const data = {
-                name: document.getElementById('catName').value,
-                slug: document.getElementById('catSlug').value
-            };
-
-            const method = id ? 'PUT' : 'POST';
-            const url = id ? `${API_BASE}/categories/${id}` : `${API_BASE}/categories`;
-
-            fetch(url, {
-                method,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-                .then(() => {
-                    closeCategoryModal();
-                    loadCategories();
-                })
-                .catch(err => alert('Ошибка сохранения'));
+            const name = document.getElementById('catName').value;
+            let slug = id ? document.getElementById('catSlug').value || translit(name) : translit(name);
+            fetch(id ? API_BASE + '/categories/' + id : API_BASE + '/categories', { method: id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + authToken }, body: JSON.stringify({ name, slug }) }).then(() => { closeCategoryModal(); loadCategoriesMap().then(loadCategories); });
         });
 
-        // ===== ПОЛЬЗОВАТЕЛИ =====
+        document.getElementById('catName').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('categoryForm').requestSubmit(); } });
+
+        // Пользователи
         function loadUsers() {
-            fetch(`${API_BASE}/users`)
-                .then(r => r.json())
-                .then(users => {
-                    document.getElementById('usersTable').innerHTML = users.length === 0
-                        ? '<tr><td colspan="5" style="text-align:center;padding:2rem;color:#9ca3af;">Нет пользователей</td></tr>'
-                        : users.map(u => `
-              <tr>
-                <td>${u.id}</td>
-                <td>${u.name}</td>
-                <td>${u.email}</td>
-                <td>${u.phone || '—'}</td>
-                <td>${u.created_at ? new Date(u.created_at).toLocaleDateString('ru-RU') : '—'}</td>
-              </tr>`).join('');
-                });
-        }
-
-        // ===== ЗАКАЗЫ =====
-        function loadOrders() {
-            fetch(`${API_BASE}/orders`)
-                .then(r => r.json())
-                .then(orders => {
-                    document.getElementById('ordersTable').innerHTML = orders.length === 0
-                        ? '<tr><td colspan="8" style="text-align:center;padding:2rem;color:#9ca3af;">Нет заказов</td></tr>'
-                        : orders.map(o => `
-          <tr>
-            <td>#${o.id}</td>
-            <td>${o.user_name || '—'}</td>
-            <td>${o.user_phone || '—'}</td>
-            <td style="font-size:0.8rem;">${(o.items || []).map(i => i.name + ' ×' + i.quantity).join('<br>') || '—'}</td>
-            <td>${Number(o.total).toLocaleString()} ₽</td>
-            <td>
-              <select onchange="updateOrderStatus(${o.id}, this.value)" style="padding:0.3rem;border:1px solid #e5e7eb;border-radius:6px;">
-                <option value="processing" ${o.status === 'processing' ? 'selected' : ''}>В обработке</option>
-                <option value="delivered" ${o.status === 'delivered' ? 'selected' : ''}>Доставлен</option>
-                <option value="cancelled" ${o.status === 'cancelled' ? 'selected' : ''}>Отменён</option>
-              </select>
-            </td>
-            <td>${o.created_at ? new Date(o.created_at).toLocaleDateString('ru-RU') : '—'}</td>
-            <td><button class="btn btn-delete" onclick="deleteOrder(${o.id})"><i class="fas fa-trash"></i></button></td>
-          </tr>`).join('');
-                });
-        }
-
-        function updateOrderStatus(id, status) {
-            fetch(`${API_BASE}/orders/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status })
+            fetch(API_BASE + '/users', { headers: { 'Authorization': 'Basic ' + authToken } }).then(r => r.json()).then(users => {
+                document.getElementById('usersTable').innerHTML = users.map(u => `<tr><td>${u.id}</td><td>${u.name}</td><td>${u.email || '—'}</td><td>${u.phone || '—'}</td><td>${u.created_at ? new Date(u.created_at).toLocaleDateString('ru-RU') : '—'}</td></tr>`).join('');
             });
         }
 
-        function deleteOrder(id) {
-            if (!confirm('Удалить заказ?')) return;
-            fetch(`${API_BASE}/orders/${id}`, { method: 'DELETE' })
-                .then(() => loadOrders());
+        // Заказы
+        function loadOrders() {
+            fetch(API_BASE + '/orders', { headers: { 'Authorization': 'Basic ' + authToken } }).then(r => r.json()).then(orders => {
+                document.getElementById('ordersTable').innerHTML = orders.map(o => `
+                    <tr><td>#${o.id}</td><td>${o.user_name || '—'}</td><td>${o.user_phone || '—'}</td>
+                    <td>${(o.items || []).map(i => i.name + ' (арт. ' + (i.article || '—') + ') ×' + i.quantity).join('<br>') || '—'}</td>
+                    <td>${Number(o.total).toLocaleString()} ₽</td>
+                    <td><select onchange="updateOrderStatus(${o.id},this.value)" style="padding:0.3rem 0.5rem;border:1px solid #e5e7eb;border-radius:6px;font-family:inherit;">
+                        <option value="processing" ${o.status === 'processing' ? 'selected' : ''}>В обработке</option>
+                        <option value="delivered" ${o.status === 'delivered' ? 'selected' : ''}>Доставлен</option>
+                        <option value="cancelled" ${o.status === 'cancelled' ? 'selected' : ''}>Отменён</option>
+                    </select></td><td>${o.created_at ? new Date(o.created_at).toLocaleDateString('ru-RU') : '—'}</td></tr>`).join('');
+            });
         }
 
-        // ===== ЗАГРУЗКА =====
-        loadProducts();
+        function updateOrderStatus(id, status) {
+            fetch(API_BASE + '/orders/' + id, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + authToken }, body: JSON.stringify({ status }) }).then(loadOrders);
+        }
     </script>
 </body>
 

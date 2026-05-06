@@ -1,77 +1,356 @@
 <!doctype html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Личный кабинет — Метиз Электрод</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Nunito', sans-serif; background: #f5f7fa; color: #111827; }
-    
-    .shop-header { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #e5e7eb; }
-    .shop-header__container { max-width: 1300px; margin: 0 auto; padding: 0.8rem 1.5rem; display: flex; align-items: center; gap: 1.5rem; }
-    .shop-logo { font-size: 1.5rem; font-weight: 900; text-decoration: none; color: #111827; }
-    .shop-logo span { color: #FF5733; }
-    .shop-nav { display: flex; gap: 1.2rem; }
-    .shop-nav a { font-weight: 500; font-size: 0.95rem; text-decoration: none; color: #111827; padding-bottom: 3px; border-bottom: 2px solid transparent; }
-    .shop-nav a:hover, .shop-nav a.active { color: #FF5733; border-bottom-color: #FF5733; }
-    
-    .container { max-width: 1300px; margin: 2rem auto; padding: 0 1.5rem; display: grid; grid-template-columns: 250px 1fr; gap: 2rem; }
-    
-    .sidebar { background: #fff; border-radius: 14px; padding: 1.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.03); height: fit-content; }
-    .sidebar h3 { margin-bottom: 1.5rem; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; }
-    .sidebar nav a { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; border-radius: 10px; text-decoration: none; color: #4b5563; font-weight: 500; margin-bottom: 0.3rem; transition: 0.3s; }
-    .sidebar nav a:hover, .sidebar nav a.active { background: #f3f4f6; color: #FF5733; }
-    .logout-btn { width: 100%; margin-top: 1rem; padding: 0.7rem; background: #ef4444; color: #fff; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; }
-    
-    .content { background: #fff; border-radius: 14px; padding: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
-    .section { display: none; }
-    .section.active { display: block; }
-    .section h2 { margin-bottom: 1.5rem; font-size: 1.4rem; }
-    
-    .empty { text-align: center; padding: 3rem; color: #9ca3af; }
-    .empty i { font-size: 3rem; display: block; margin-bottom: 1rem; }
-    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #f5f7fa;
+      color: #111827;
+    }
+
+    .shop-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .shop-header__container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .shop-logo {
+      font-size: 1.5rem;
+      font-weight: 900;
+      text-decoration: none;
+      color: #111827;
+    }
+
+    .shop-logo span {
+      color: #FF5733;
+    }
+
+    .shop-nav {
+      display: flex;
+      gap: 1.2rem;
+    }
+
+    .shop-nav a {
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      color: #111827;
+      padding-bottom: 3px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .shop-nav a:hover,
+    .shop-nav a.active {
+      color: #FF5733;
+      border-bottom-color: #FF5733;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      height: fit-content;
+    }
+
+    .sidebar h3 {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #4b5563;
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+      transition: 0.3s;
+    }
+
+    .sidebar nav a:hover,
+    .sidebar nav a.active {
+      background: #f3f4f6;
+      color: #FF5733;
+    }
+
+    .logout-btn {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.7rem;
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .content {
+      background: #fff;
+      border-radius: 14px;
+      padding: 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 3rem;
+      color: #9ca3af;
+    }
+
+    .empty i {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
     /* Заказы */
-    .order-card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
-    .order-card__header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-    .status { padding: 0.2rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; }
-    .status.processing { background: #fef3c7; color: #92400e; }
-    .status.delivered { background: #d1fae5; color: #065f46; }
-    .status.cancelled { background: #fee2e2; color: #991b1b; }
-    .order-card__items { display: flex; flex-wrap: wrap; gap: 0.8rem; }
-    .order-card__item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
-    .order-card__item img { width: 35px; height: 35px; object-fit: contain; background: #f9fafb; border-radius: 6px; }
-    
+    .order-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .order-card__header {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .status {
+      padding: 0.2rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .status.processing {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status.delivered {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .status.cancelled {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .order-card__items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .order-card__item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .order-card__item img {
+      width: 35px;
+      height: 35px;
+      object-fit: contain;
+      background: #f9fafb;
+      border-radius: 6px;
+    }
+
     /* Корзина */
-    .cart-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid #e5e7eb; border-radius: 10px; margin-bottom: 0.8rem; }
-    .cart-item img { width: 60px; height: 60px; object-fit: contain; background: #f9fafb; border-radius: 8px; }
-    .cart-item__info { flex: 1; }
-    .cart-item__info h4 { font-size: 1rem; }
-    .cart-item__info .price { color: #FF5733; font-weight: 600; }
-    .cart-item__qty { display: flex; align-items: center; gap: 0.5rem; }
-    .cart-item__qty button { width: 28px; height: 28px; border: 1px solid #e5e7eb; background: #fff; border-radius: 6px; cursor: pointer; }
-    .cart-item__remove { background: #ef4444; color: #fff; border: none; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; }
-    .cart-total { text-align: right; font-size: 1.2rem; font-weight: 700; margin-top: 1rem; }
-    .checkout-btn { padding: 0.8rem 2rem; background: #FF5733; color: #fff; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 1rem; margin-top: 1rem; }
-    
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      margin-bottom: 0.8rem;
+    }
+
+    .cart-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+
+    .cart-item__info {
+      flex: 1;
+    }
+
+    .cart-item__info h4 {
+      font-size: 1rem;
+    }
+
+    .cart-item__info .price {
+      color: #FF5733;
+      font-weight: 600;
+    }
+
+    .cart-item__qty {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .cart-item__qty button {
+      width: 28px;
+      height: 28px;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .cart-item__remove {
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .cart-total {
+      text-align: right;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-top: 1rem;
+    }
+
+    .checkout-btn {
+      padding: 0.8rem 2rem;
+      background: #FF5733;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+
     /* Профиль */
-    .form-group { margin-bottom: 1.2rem; }
-    .form-group label { display: block; font-weight: 500; margin-bottom: 0.4rem; }
-    .form-group input { width: 100%; padding: 0.7rem 1rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 0.95rem; font-family: inherit; }
-    .save-btn { padding: 0.7rem 1.5rem; background: #FF5733; color: #fff; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; }
-    
-    .toast { position: fixed; bottom: 20px; right: 20px; background: #111827; color: #fff; padding: 1rem 1.5rem; border-radius: 12px; z-index: 99999; }
-    
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+
+    .save-btn {
+      padding: 0.7rem 1.5rem;
+      background: #FF5733;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #111827;
+      color: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      z-index: 99999;
+    }
+
     @media (max-width: 768px) {
-      .container { grid-template-columns: 1fr; }
-      .sidebar nav { display: flex; flex-wrap: wrap; gap: 0.3rem; }
-      .sidebar nav a { font-size: 0.85rem; padding: 0.5rem 0.8rem; }
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+      }
+
+      .sidebar nav a {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.8rem;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <header class="shop-header">
@@ -90,7 +369,8 @@
       <h3><i class="fas fa-user-circle"></i> <span id="sidebarName">Кабинет</span></h3>
       <nav>
         <a href="#" class="active" data-section="orders"><i class="fas fa-shopping-bag"></i> Мои заказы</a>
-        <a href="#" data-section="cart"><i class="fas fa-shopping-cart"></i> Корзина <span id="cartBadge" style="background:#FF5733;color:#fff;border-radius:50%;padding:0.1rem 0.4rem;font-size:0.7rem;margin-left:auto;">0</span></a>
+        <a href="#" data-section="cart"><i class="fas fa-shopping-cart"></i> Корзина <span id="cartBadge"
+            style="background:#FF5733;color:#fff;border-radius:50%;padding:0.1rem 0.4rem;font-size:0.7rem;margin-left:auto;">0</span></a>
         <a href="#" data-section="profile"><i class="fas fa-cog"></i> Профиль</a>
       </nav>
       <button class="logout-btn" onclick="logout()">Выйти</button>
@@ -140,6 +420,21 @@
         renderOrders();
       });
     }
+    window.cancelOrder = function (orderId) {
+      if (!confirm('Отменить заказ #' + orderId + '?')) return;
+
+      fetch('/api/orders/' + orderId + '/cancel', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+      }).then(r => r.json()).then(data => {
+        if (data.success) {
+          showToast('Заказ #' + orderId + ' отменён');
+          loadOrders();
+        } else {
+          showToast(data.error || 'Ошибка отмены');
+        }
+      }).catch(() => showToast('Ошибка отмены заказа'));
+    };
 
     function renderOrders() {
       const c = document.getElementById('ordersContainer');
@@ -147,21 +442,22 @@
         c.innerHTML = '<div class="empty"><i class="fas fa-shopping-bag"></i><p>У вас пока нет заказов</p></div>';
         return;
       }
-      c.innerHTML = orders.map((o, i) => `
-        <div class="order-card">
-          <div class="order-card__header">
-            <strong>Заказ #${o.id}</strong>
-            <span>${new Date(o.created_at).toLocaleDateString('ru-RU')}</span>
-            <span class="status ${o.status}">${o.status === 'processing' ? 'В обработке' : o.status === 'delivered' ? 'Доставлен' : 'Отменён'}</span>
-            <strong>${Number(o.total).toLocaleString()} ₽</strong>
-          </div>
-          <div class="order-card__items">
-            ${(o.items || []).map(item => `
-              <div class="order-card__item"><img src="${item.image || 'image/no-photo.png'}" /><span>${item.name} ×${item.quantity}</span></div>
-            `).join('')}
-          </div>
-        </div>
-      `).join('');
+      c.innerHTML = orders.map(o => `
+    <div class="order-card">
+      <div class="order-card__header">
+        <strong>Заказ #${o.id}</strong>
+        <span>${new Date(o.created_at).toLocaleDateString('ru-RU')}</span>
+        <span class="status ${o.status}">${o.status === 'processing' ? 'В обработке' : o.status === 'delivered' ? 'Доставлен' : 'Отменён'}</span>
+        <strong>${Number(o.total).toLocaleString()} ₽</strong>
+        ${o.status === 'processing' ? '<button onclick="cancelOrder(' + o.id + ')" style="background:#ef4444;color:#fff;border:none;padding:0.4rem 0.8rem;border-radius:6px;cursor:pointer;font-size:0.8rem;">Отменить</button>' : ''}
+      </div>
+      <div class="order-card__items">
+        ${(o.items || []).map(item => `
+          <div class="order-card__item"><img src="${item.image || 'image/no-photo.png'}" /><span>${item.name} ${item.article ? '(арт. ' + item.article + ')' : ''} ×${item.quantity}</span></div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
     }
 
     // Корзина
@@ -197,7 +493,7 @@
       `;
     }
 
-    window.updateQty = function(id, delta) {
+    window.updateQty = function (id, delta) {
       const item = cart.find(i => i.id === id);
       if (!item) return;
       item.quantity += delta;
@@ -205,7 +501,7 @@
       saveCart();
     };
 
-    window.removeItem = function(id) {
+    window.removeItem = function (id) {
       cart = cart.filter(i => i.id !== id);
       saveCart();
     };
@@ -216,7 +512,7 @@
       renderCart();
     }
 
-    window.checkout = function() {
+    window.checkout = function () {
       if (!cart.length) return alert('Корзина пуста');
       if (!user) return alert('Войдите в аккаунт');
 
@@ -243,7 +539,7 @@
       document.getElementById('profileAddress').value = user.address || '';
     }
 
-    window.saveProfile = function(e) {
+    window.saveProfile = function (e) {
       e.preventDefault();
       const data = {
         name: document.getElementById('profileName').value,
@@ -259,14 +555,14 @@
       });
     };
 
-    window.logout = function() {
+    window.logout = function () {
       localStorage.removeItem('currentUser');
       location.href = 'index.html';
     };
 
     // Навигация
     document.querySelectorAll('.sidebar nav a').forEach(link => {
-      link.addEventListener('click', function(e) {
+      link.addEventListener('click', function (e) {
         e.preventDefault();
         document.querySelectorAll('.sidebar nav a').forEach(l => l.classList.remove('active'));
         this.classList.add('active');
@@ -290,4 +586,5 @@
     loadProfile();
   </script>
 </body>
+
 </html>

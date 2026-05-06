@@ -18,99 +18,134 @@
 
 
   <!-- Модальное окно авторизации -->
-<!-- Модальное окно авторизации -->
-<div id="authModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;justify-content:center;align-items:center;backdrop-filter:blur(8px);">
-  <div style="background:white;border-radius:24px;padding:2.5rem 2rem;width:440px;max-width:95vw;position:relative;box-shadow:0 25px 60px rgba(0,0,0,0.3);overflow:hidden;">
-    
-    
-    
-    <button onclick="closeAuthModal()" style="position:absolute;top:16px;right:16px;background:#f3f4f6;border:none;width:32px;height:32px;border-radius:50%;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6b7280;z-index:1;">&times;</button>
-    
-    <!-- Шаг 1: Ввод телефона/email -->
-    <div id="authStep1">
-      <div style="text-align:center;margin-bottom:1.5rem;">
-        <div style="width:56px;height:56px;background:linear-gradient(135deg,#FF5733,#FF8F00);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
-          <i class="fas fa-sign-in-alt" style="color:white;font-size:1.3rem;"></i>
+  <!-- Модальное окно авторизации -->
+  <div id="authModal"
+    style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;justify-content:center;align-items:center;backdrop-filter:blur(8px);">
+    <div
+      style="background:white;border-radius:24px;padding:2.5rem 2rem;width:440px;max-width:95vw;position:relative;box-shadow:0 25px 60px rgba(0,0,0,0.3);overflow:hidden;">
+
+
+
+      <button onclick="closeAuthModal()"
+        style="position:absolute;top:16px;right:16px;background:#f3f4f6;border:none;width:32px;height:32px;border-radius:50%;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6b7280;z-index:1;">&times;</button>
+
+      <!-- Шаг 1: Ввод телефона/email -->
+      <div id="authStep1">
+        <div style="text-align:center;margin-bottom:1.5rem;">
+          <div
+            style="width:56px;height:56px;background:linear-gradient(135deg,#FF5733,#FF8F00);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+            <i class="fas fa-sign-in-alt" style="color:white;font-size:1.3rem;"></i>
+          </div>
+          <h2 style="font-size:1.4rem;font-weight:700;color:#111827;">Вход или регистрация</h2>
+          <p style="color:#6b7280;font-size:0.9rem;margin-top:0.4rem;">Введите номер телефона или email</p>
         </div>
-        <h2 style="font-size:1.4rem;font-weight:700;color:#111827;">Вход или регистрация</h2>
-        <p style="color:#6b7280;font-size:0.9rem;margin-top:0.4rem;">Введите номер телефона или email</p>
-      </div>
 
-      <div id="authMessage" style="text-align:center;margin-bottom:1rem;font-size:0.85rem;min-height:1.5rem;"></div>
+        <div id="authMessage" style="text-align:center;margin-bottom:1rem;font-size:0.85rem;min-height:1.5rem;"></div>
 
-      <div style="margin-bottom:1.2rem;position:relative;">
-        <i id="authInputIcon" class="fas fa-phone-alt" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9ca3af;"></i>
-       <input type="text" id="authContact" placeholder="+7 (___) ___-__-__ или email@example.com" 
-  style="width:100%;padding:0.9rem 1rem 0.9rem 2.5rem;border:2px solid #e5e7eb;border-radius:12px;font-size:0.95rem;outline:none;font-family:inherit;transition:0.3s;" 
-  onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" />
-      </div>
-
-      <button onclick="sendCode()" style="width:100%;padding:1rem;background:linear-gradient(135deg,#FF5733,#FF8F00);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:0.3s;box-shadow:0 4px 15px rgba(255,87,51,0.3);">Получить код</button>
-
-      <p style="text-align:center;margin-top:1rem;font-size:0.75rem;color:#9ca3af;">Нажимая «Получить код», вы соглашаетесь с условиями обработки персональных данных</p>
-    </div>
-
-    <!-- Шаг 2: Ввод кода -->
-    <div id="authStep2" style="display:none;">
-      <div style="text-align:center;margin-bottom:1.5rem;">
-        <div style="width:56px;height:56px;background:linear-gradient(135deg,#FF5733,#FF8F00);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
-          <i class="fas fa-lock" style="color:white;font-size:1.3rem;"></i>
+        <div style="margin-bottom:1.2rem;position:relative;">
+          <i id="authInputIcon" class="fas fa-phone-alt"
+            style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9ca3af;"></i>
+          <input type="text" id="authContact" placeholder="+7 (___) ___-__-__ или email@example.com"
+            style="width:100%;padding:0.9rem 1rem 0.9rem 2.5rem;border:2px solid #e5e7eb;border-radius:12px;font-size:0.95rem;outline:none;font-family:inherit;transition:0.3s;"
+            onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" />
         </div>
-        <h2 style="font-size:1.4rem;font-weight:700;color:#111827;">Код подтверждения</h2>
-        <p style="color:#6b7280;font-size:0.9rem;margin-top:0.4rem;">Отправлен на <strong id="codeDestination"></strong></p>
+
+        <button onclick="sendCode()"
+          style="width:100%;padding:1rem;background:linear-gradient(135deg,#FF5733,#FF8F00);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:0.3s;box-shadow:0 4px 15px rgba(255,87,51,0.3);">Получить
+          код</button>
+
+        <p style="text-align:center;margin-top:1rem;font-size:0.75rem;color:#9ca3af;">Нажимая «Получить код», вы
+          соглашаетесь с условиями обработки персональных данных</p>
       </div>
 
-      <div id="authMessage2" style="text-align:center;margin-bottom:1rem;font-size:0.85rem;min-height:1.5rem;"></div>
-
-      <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1.5rem;" id="codeInputs">
-        <input type="text" maxlength="1" class="code-input" style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" oninput="moveCodeInput(this)" />
-        <input type="text" maxlength="1" class="code-input" style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" oninput="moveCodeInput(this)" />
-        <input type="text" maxlength="1" class="code-input" style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" oninput="moveCodeInput(this)" />
-        <input type="text" maxlength="1" class="code-input" style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" oninput="moveCodeInput(this)" />
-        <input type="text" maxlength="1" class="code-input" style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" oninput="checkCodeComplete(this)" />
-      </div>
-
-      <button onclick="verifyCode()" style="width:100%;padding:1rem;background:linear-gradient(135deg,#FF5733,#FF8F00);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:0.3s;box-shadow:0 4px 15px rgba(255,87,51,0.3);">Подтвердить</button>
-
-      <div style="text-align:center;margin-top:1rem;">
-        <button onclick="sendCode()" style="background:none;border:none;color:#FF5733;cursor:pointer;font-size:0.9rem;font-weight:500;">Отправить код повторно</button>
-      </div>
-      <div style="text-align:center;margin-top:0.5rem;">
-        <button onclick="goToStep1()" style="background:none;border:none;color:#6b7280;cursor:pointer;font-size:0.9rem;">← Назад</button>
-      </div>
-    </div>
-
-    <!-- Шаг 3: Регистрация -->
-    <div id="authStep3" style="display:none;">
-      <div style="text-align:center;margin-bottom:1.5rem;">
-        <div style="width:56px;height:56px;background:linear-gradient(135deg,#FF5733,#FF8F00);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
-          <i class="fas fa-user-plus" style="color:white;font-size:1.3rem;"></i>
+      <!-- Шаг 2: Ввод кода -->
+      <div id="authStep2" style="display:none;">
+        <div style="text-align:center;margin-bottom:1.5rem;">
+          <div
+            style="width:56px;height:56px;background:linear-gradient(135deg,#FF5733,#FF8F00);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+            <i class="fas fa-lock" style="color:white;font-size:1.3rem;"></i>
+          </div>
+          <h2 style="font-size:1.4rem;font-weight:700;color:#111827;">Код подтверждения</h2>
+          <p style="color:#6b7280;font-size:0.9rem;margin-top:0.4rem;">Отправлен на <strong
+              id="codeDestination"></strong></p>
         </div>
-        <h2 style="font-size:1.4rem;font-weight:700;color:#111827;">Завершите регистрацию</h2>
-        <p style="color:#6b7280;font-size:0.9rem;margin-top:0.4rem;">Укажите ваше имя</p>
+
+        <div id="authMessage2" style="text-align:center;margin-bottom:1rem;font-size:0.85rem;min-height:1.5rem;"></div>
+
+        <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1.5rem;" id="codeInputs">
+          <input type="text" maxlength="1" class="code-input"
+            style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;"
+            onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'"
+            oninput="moveCodeInput(this)" />
+          <input type="text" maxlength="1" class="code-input"
+            style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;"
+            onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'"
+            oninput="moveCodeInput(this)" />
+          <input type="text" maxlength="1" class="code-input"
+            style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;"
+            onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'"
+            oninput="moveCodeInput(this)" />
+          <input type="text" maxlength="1" class="code-input"
+            style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;"
+            onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'"
+            oninput="moveCodeInput(this)" />
+          <input type="text" maxlength="1" class="code-input"
+            style="width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;"
+            onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'"
+            oninput="checkCodeComplete(this)" />
+        </div>
+
+        <button onclick="verifyCode()"
+          style="width:100%;padding:1rem;background:linear-gradient(135deg,#FF5733,#FF8F00);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:0.3s;box-shadow:0 4px 15px rgba(255,87,51,0.3);">Подтвердить</button>
+
+        <div style="text-align:center;margin-top:1rem;">
+          <button onclick="sendCode()"
+            style="background:none;border:none;color:#FF5733;cursor:pointer;font-size:0.9rem;font-weight:500;">Отправить
+            код повторно</button>
+        </div>
+        <div style="text-align:center;margin-top:0.5rem;">
+          <button onclick="goToStep1()"
+            style="background:none;border:none;color:#6b7280;cursor:pointer;font-size:0.9rem;">← Назад</button>
+        </div>
       </div>
 
-      <div id="authMessage3" style="text-align:center;margin-bottom:1rem;font-size:0.85rem;min-height:1.5rem;"></div>
+      <!-- Шаг 3: Регистрация -->
+      <div id="authStep3" style="display:none;">
+        <div style="text-align:center;margin-bottom:1.5rem;">
+          <div
+            style="width:56px;height:56px;background:linear-gradient(135deg,#FF5733,#FF8F00);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+            <i class="fas fa-user-plus" style="color:white;font-size:1.3rem;"></i>
+          </div>
+          <h2 style="font-size:1.4rem;font-weight:700;color:#111827;">Завершите регистрацию</h2>
+          <p style="color:#6b7280;font-size:0.9rem;margin-top:0.4rem;">Укажите ваше имя</p>
+        </div>
 
-      <div style="margin-bottom:1.2rem;position:relative;">
-        <i class="fas fa-user" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9ca3af;"></i>
-        <input type="text" id="regName" placeholder="Ваше имя" style="width:100%;padding:0.9rem 1rem 0.9rem 2.5rem;border:2px solid #e5e7eb;border-radius:12px;font-size:0.95rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" />
+        <div id="authMessage3" style="text-align:center;margin-bottom:1rem;font-size:0.85rem;min-height:1.5rem;"></div>
+
+        <div style="margin-bottom:1.2rem;position:relative;">
+          <i class="fas fa-user"
+            style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9ca3af;"></i>
+          <input type="text" id="regName" placeholder="Ваше имя"
+            style="width:100%;padding:0.9rem 1rem 0.9rem 2.5rem;border:2px solid #e5e7eb;border-radius:12px;font-size:0.95rem;outline:none;font-family:inherit;"
+            onfocus="this.style.borderColor='#FF5733'" onblur="this.style.borderColor='#e5e7eb'" />
+        </div>
+
+        <button onclick="completeRegistration()"
+          style="width:100%;padding:1rem;background:linear-gradient(135deg,#FF5733,#FF8F00);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:0.3s;box-shadow:0 4px 15px rgba(255,87,51,0.3);">Завершить</button>
       </div>
 
-      <button onclick="completeRegistration()" style="width:100%;padding:1rem;background:linear-gradient(135deg,#FF5733,#FF8F00);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:0.3s;box-shadow:0 4px 15px rgba(255,87,51,0.3);">Завершить</button>
     </div>
-
   </div>
-</div>
 
   <!-- ШАПКА -->
   <header class="shop-header">
     <div class="shop-header__container">
       <a href="index.html" class="shop-logo">Метиз<span>Электрод</span></a>
-      <div class="shop-search">
-        <input type="text" placeholder="Поиск товаров..." id="globalSearch" />
-        <button><i class="fas fa-search"></i></button>
-      </div>
+      <div class="shop-search" style="position:relative;">
+  <input type="text" placeholder="Поиск товаров..." id="globalSearch" autocomplete="off" />
+  <button><i class="fas fa-search"></i></button>
+  <div id="searchSuggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.12);z-index:100;max-height:400px;overflow-y:auto;margin-top:5px;"></div>
+</div>
       <nav class="shop-nav" id="shopNav">
         <a href="index.html" class="active" data-page="home">Главная</a>
         <a href="#catalog" data-page="catalog">Каталог</a>
@@ -128,7 +163,8 @@
     </div>
   </header>
   <div id="main-content">
-    <!-- HERO С ПАТТЕРНОМ -->
+    
+        <!-- HERO С ПОСТАВЩИКАМИ -->
     <section class="hero-full">
       <div class="animated-background">
         <div class="floating-shapes">
@@ -144,6 +180,29 @@
         <div class="hero-full__buttons">
           <a href="#catalog" class="btn-primary">Смотреть каталог</a>
           <a href="#" onclick="loadAboutPage(event)" class="btn-outline">О компании</a>
+        </div>
+        
+        <!-- Поставщики -->
+        <div class="hero-suppliers">
+          <span>Мы — официальные представители</span>
+          <div class="hero-suppliers__row">
+            <div class="hero-supplier">
+              <div class="hero-supplier__logo"><i class="fas fa-industry"></i></div>
+              <span>ДОНМЕТ</span>
+            </div>
+            <div class="hero-supplier">
+              <div class="hero-supplier__logo"><i class="fas fa-bolt"></i></div>
+              <span>НЭЗ</span>
+            </div>
+            <div class="hero-supplier">
+              <div class="hero-supplier__logo"><i class="fas fa-cubes"></i></div>
+              <span>МОНОЛИТ-ГРУПП</span>
+            </div>
+            <div class="hero-supplier">
+              <div class="hero-supplier__logo"><i class="fas fa-tools"></i></div>
+              <span>Крепёжные заводы</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -185,6 +244,8 @@
       </div>
     </section>
 
+    
+
     <!-- БЕГУЩАЯ СТРОКА -->
     <div class="pattern">
       <div class="pattern-track">БОЛТЫ ГАЙКИ ШАЙБЫ ШПИЛЬКИ АНКЕРЫ ДЮБЕЛИ ШУРУПЫ ГВОЗДИ ЗАКЛЁПКИ ШТИФТЫ ТРОСЫ ЦЕПИ
@@ -213,7 +274,7 @@
     <script>AOS.init();</script>
     <script src="js/app.js"></script>
   </div>
-   <!-- Корзина -->
+  <!-- Корзина -->
   <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
   <div class="cart-sidebar" id="cartSidebar">
     <div class="cart-sidebar__header">
@@ -235,19 +296,21 @@
   <script src="js/app.js"></script>
 
   <!-- Корзина (модальное окно) -->
-<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-<div class="cart-sidebar" id="cartSidebar">
-  <div class="cart-sidebar__header">
-    <h3>Корзина</h3>
-    <button class="cart-sidebar__close" onclick="closeCart()">&times;</button>
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-sidebar__header">
+      <h3>Корзина</h3>
+      <button class="cart-sidebar__close" onclick="closeCart()">&times;</button>
+    </div>
+    <div class="cart-sidebar__items" id="cartItems"></div>
+    <div class="cart-sidebar__footer">
+      <div class="cart-total">Итого: <span id="cartTotal">0 ₽</span></div>
+      <button class="cart-checkout-btn" onclick="checkout()">Оформить заказ</button>
+    </div>
   </div>
-  <div class="cart-sidebar__items" id="cartItems"></div>
-  <div class="cart-sidebar__footer">
-    <div class="cart-total">Итого: <span id="cartTotal">0 ₽</span></div>
-    <button class="cart-checkout-btn" onclick="checkout()">Оформить заказ</button>
-  </div>
-</div>
-
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})" id="scrollToTopBtn" style="position:fixed;bottom:30px;right:30px;width:48px;height:48px;background:#FF5733;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.3rem;z-index:999;display:none;box-shadow:0 4px 15px rgba(255,87,51,0.3);">
+  <i class="fas fa-arrow-up"></i>
+</button>
 </body>
 
 </html>
