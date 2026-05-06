@@ -1845,7 +1845,8 @@ img {
   flex-direction: column;
   gap: 4px;
   z-index: 2;
-}
+} 
+
 
 .product-badge {
   padding: 0.2rem 0.6rem;
